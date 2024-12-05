@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap');
+:root {
+    --background-color: #f4f4f4;
+    --primary-button-color: #9068fd;
+    --primary-text-color: #171717;
+    --secondary-text-color: #6c6b6c;
+    --font-family: 'Manrope', sans-serif;
+  }
+  
+  * {
+    font-family: var(--font-family), sans-serif;
+}
+
+/* Optional: Specific styles for body if you need to override */
+body {
+    font-family: var(--font-family), sans-serif;
+}
+  
