@@ -1,1 +1,64 @@
-<p>admin works!</p>
+<div class="admin-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li (click)="toggleDrawer('profile')">
+          <i class="material-icons">account_circle</i>
+          <span>Profile</span>
+        </li>
+        <li (click)="toggleDrawer('users')">
+          <i class="material-icons">group</i>
+          <span>Users</span>
+        </li>
+        <li (click)="toggleDrawer('roles')">
+          <i class="material-icons">security</i>
+          <span>Roles</span>
+        </li>
+        <li (click)="toggleDrawer('projects')">
+          <i class="material-icons">business_center</i>
+          <span>Projects</span>
+        </li>
+        <li (click)="toggleDrawer('reports')">
+          <i class="material-icons">bar_chart</i>
+          <span>Reports</span>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Drawer -->
+    <div class="drawer" *ngIf="drawerOpen" [ngClass]="{'drawer-open': drawerOpen}">
+      <!-- Content inside drawer based on the current section -->
+      <div *ngIf="currentDrawer === 'profile'">
+        <button (click)="handleAction('viewProfile')">View Profile</button>
+        <button (click)="handleAction('editProfile')">Edit Profile</button>
+      </div>
+      <div *ngIf="currentDrawer === 'users'">
+        <button (click)="handleAction('addUser')">Add User</button>
+        <button (click)="handleAction('viewAllUsers')">View All Users</button>
+        <button (click)="handleAction('removeUser')">Remove User</button>
+        <button (click)="handleAction('updateUser')">Update User</button>
+      </div>
+      <div *ngIf="currentDrawer === 'roles'">
+        <button (click)="handleAction('addRole')">Add Role</button>
+        <button (click)="handleAction('viewRole')">View Role</button>
+      </div>
+      <div *ngIf="currentDrawer === 'projects'">
+        <button (click)="handleAction('addProject')">Add Project</button>
+        <button (click)="handleAction('viewAllProjects')">View All Projects</button>
+        <button (click)="handleAction('removeProject')">Remove Project</button>
+        <button (click)="handleAction('updateProject')">Update Project</button>
+      </div>
+      <div *ngIf="currentDrawer === 'reports'">
+        <button (click)="handleAction('generateReport')">Generate Report</button>
+        <button (click)="handleAction('viewReports')">View Reports</button>
+      </div>
+    </div>
+  
+    <!-- Actions Container -->
+    <div class="actions-container">
+      <h2>Actions</h2>
+      <p>Select an action from the drawer.</p>
+      <!-- Add any content you want to display when a drawer item is selected -->
+    </div>
+  </div>
+  
