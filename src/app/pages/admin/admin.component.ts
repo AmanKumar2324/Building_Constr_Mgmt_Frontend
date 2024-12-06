@@ -39,6 +39,13 @@ export class AdminComponent {
 
   isGettingProject: boolean = false;
 
+  vendors: any[] = []; // Stores the vendor data
+  isShowingVendors: boolean = false;
+  isAddingVendor: boolean = false;
+  isUpdatingVendor: boolean = false;
+  isRemovingVendor: boolean = false;
+
+
 
 
 
@@ -86,6 +93,15 @@ export class AdminComponent {
       status: 'Ongoing', // Default status
       projectManagerId: '',
     };
+
+    addVendorData: any = {
+      name: '',
+      contactDetails: '',
+      materialSupplied: '',
+      contractTerms: '',
+      deliveryStatus: '',
+    };
+    
     
     
 
@@ -416,6 +432,169 @@ resetUpdateProjectForm() {
   }
   
 
+  // *********************************************Vendor section**********************************************
+//Getting all the vendors
+
+  fetchAllVendors() {
+    const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for fetching vendors
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.vendors = response; // Store the vendor data
+        console.log('Vendors fetched successfully:', this.vendors); // Debugging
+      },
+      error: (err) => {
+        console.error('Error fetching vendors:', err);
+        alert('Failed to fetch vendors. Please try again.');
+      },
+    });
+  }
+  showAllVendors() {
+    this.isShowingVendors = true; // Show the "All Users" table
+    this.fetchAllVendors(); // Fetch users from API
+  }
+
+  //Adding the vendor
+
+  addVendor() {
+    const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for adding a vendor
+    this.http.post(apiUrl, this.addVendorData).subscribe({
+      next: () => {
+        alert('Vendor added successfully!');
+        this.resetAddVendorForm(); // Reset the form after submission
+        this.fetchAllVendors(); // Refresh the vendor list
+      },
+      error: (err) => {
+        console.error('Error adding vendor:', err);
+        alert('Failed to add vendor. Please try again.');
+      },
+    });
+  }
+
+  resetAddVendorForm() {
+    this.addVendorData = {
+      name: '',
+      contactDetails: '',
+      materialSupplied: '',
+      contractTerms: '',
+      deliveryStatus: '',
+    };
+    this.currentAction = null; // Reset the current action
+  }
+  
+  showAddVendorForm() {
+    this.isAddingVendor = true; // Show the form
+    this.isShowingVendors = false; // Hide the users table
+  }
+
+  //Update the status of vendor
+  updateVendorStatusData: any = {
+    vendorId: null,
+    deliveryStatus: 'Delivered', // Default value
+  };
+  
+
+  updateVendorStatus() {
+    // Ensure the vendorId is valid
+    if (!this.updateVendorStatusData.vendorId || this.updateVendorStatusData.vendorId <= 0) {
+      this.statusMessage = 'Please enter a valid Vendor ID.';
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Vendor/${this.updateVendorStatusData.vendorId}/status`;
+  
+    // Prepare the payload to send both vendorId and deliveryStatus
+    const payload = {
+      vendorId: this.updateVendorStatusData.vendorId,
+      deliveryStatus: this.updateVendorStatusData.deliveryStatus
+    };
+  
+    // Send the request with the appropriate content-type
+    this.http.patch(apiUrl, payload, {
+      headers: { 'Content-Type': 'application/json' }, // Use application/json to send the payload as JSON
+      responseType: 'text', // Expecting a text response (empty 204 response)
+    }).subscribe({
+      next: () => {
+        this.statusMessage = 'Vendor delivery status updated successfully!';
+        this.resetUpdateVendorStatusForm(); // Reset the form
+      },
+      error: (err) => {
+        console.error('Error updating vendor status:', err);
+        if (err.status === 404) {
+          this.statusMessage = `Vendor with ID ${this.updateVendorStatusData.vendorId} not found.`;
+        } else {
+          this.statusMessage = 'Failed to update vendor status. Please try again.';
+        }
+      },
+    });
+  }
+  resetUpdateVendorStatusForm() {
+    this.updateVendorStatusData = {
+      vendorId: null,
+      deliveryStatus: 'Delivered',
+    };
+    this.statusMessage = null;
+    this.currentAction = null; // Reset the current action
+  }
+  
+  showUpdateVendorForm() {
+    this.isUpdatingVendor = true; // Show the form
+  }
+  
+
+  //Remove vendor
+
+  removeVendorData: any = {
+    vendorId: null,
+  };
+  
+  statusMessage: string | null = null; // Stores success or error messages
+  
+  removeVendor() {
+    if (!this.removeVendorData.vendorId || this.removeVendorData.vendorId <= 0) {
+      this.statusMessage = 'Please enter a valid Vendor ID.';
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Vendor/${this.removeVendorData.vendorId}`;
+  
+    // Send DELETE request to remove vendor
+    this.http.delete(apiUrl).subscribe({
+      next: () => {
+        this.statusMessage = 'Vendor removed successfully!';
+  
+        // Show confirmation message (using alert or MatSnackBar)
+        this.showConfirmationMessage('Vendor removed successfully!');
+  
+        this.resetRemoveVendorForm(); // Reset the form after successful deletion
+      },
+      error: (err) => {
+        console.error('Error removing vendor:', err);
+        this.statusMessage = 'Failed to remove vendor. Please try again.';
+      },
+    });
+  }
+  
+  // Method to show confirmation message
+  showConfirmationMessage(message: string) {
+    // Using alert (basic method)
+    alert(message);
+  }
+  
+  
+  resetRemoveVendorForm() {
+    this.removeVendorData = {
+      vendorId: null,
+    };
+    this.statusMessage = null;
+    this.currentAction = null; // Reset the current action
+  }
+  
+  showRemoveVendorForm() {
+    this.isRemovingVendor = true; // Show the form
+  }
+  
+  
+
 /********************************************Handling all the actions****************************************************************** */
   // Handle specific actions from the drawer
   handleAction(action: string) {
@@ -455,6 +634,24 @@ resetUpdateProjectForm() {
     }
     else if (action === 'viewProjectById') {
       this.showGetProjectForm(); // Reset form when opening "Get Project by ID"
+    }
+    else if (action === 'viewAllVendors') {
+      this.showAllVendors(); // Fetch all vendors when this action is triggered
+    }
+    else if (action === 'addVendor') {
+      console.log('Add Vendor form opened');
+      this.isAddingVendor = true;
+      this.showAddVendorForm();
+    }
+    else if (action === 'updateVendor') {
+      console.log('Update Vendor Delivery Status form opened');
+      this.showUpdateVendorForm();
+      this.resetUpdateVendorStatusForm();
+    }
+    else if (action === 'removeVendor') {
+      console.log('Remove Vendor form opened');
+      this.showRemoveVendorForm();
+      this.resetRemoveVendorForm();
     }
     
   }

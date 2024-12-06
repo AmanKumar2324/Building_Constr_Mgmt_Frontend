@@ -10,13 +10,17 @@
           <i class="material-icons">group</i>
           <span>Users</span>
         </li>
-        <li (click)="toggleDrawer('roles')">
-          <i class="material-icons">security</i>
-          <span>Roles</span>
-        </li>
         <li (click)="toggleDrawer('projects')">
           <i class="material-icons">business_center</i>
           <span>Projects</span>
+        </li>
+        <li (click)="toggleDrawer('vendors')">
+          <i class="material-icons">store</i>
+          <span>Vendors</span>
+        </li>
+        <li (click)="toggleDrawer('roles')">
+          <i class="material-icons">security</i>
+          <span>Roles</span>
         </li>
         <li (click)="toggleDrawer('reports')">
           <i class="material-icons">bar_chart</i>
@@ -39,16 +43,22 @@
         <button (click)="handleAction('removeUser')">Remove User</button>
         <button (click)="handleAction('updateUser')">Update User</button>
       </div>
-      <div *ngIf="currentDrawer === 'roles'">
-        <button (click)="handleAction('addRole')">Add Role</button>
-        <button (click)="handleAction('viewRole')">View Role</button>
-      </div>
       <div *ngIf="currentDrawer === 'projects'">
         <button (click)="handleAction('addProject')">Add Project</button>
         <button (click)="handleAction('viewAllProjects')">View All Projects</button>
         <button (click)="handleAction('viewProjectById')">View Project By Id</button>
         <button (click)="handleAction('removeProject')">Remove Project</button>
         <button (click)="handleAction('updateProject')">Update Project</button>
+      </div>
+      <div *ngIf="currentDrawer === 'vendors'">
+        <button (click)="handleAction('viewAllVendors')">View Vendors</button>
+        <button (click)="handleAction('addVendor')">Add Vendors</button>
+        <button (click)="handleAction('updateVendor')">Modify Vendor</button>
+        <button (click)="handleAction('removeVendor')">Remove Vendor</button>
+      </div>
+      <div *ngIf="currentDrawer === 'roles'">
+        <button (click)="handleAction('addRole')">Add Role</button>
+        <button (click)="handleAction('viewRole')">View Role</button>
       </div>
       <div *ngIf="currentDrawer === 'reports'">
         <button (click)="handleAction('generateReport')">Generate Report</button>
@@ -60,7 +70,7 @@
     <div class="actions-container">
       <!-- Default Message -->
       <div *ngIf="!isDrawerActionSelected">
-        <h2>Actions</h2>
+        <h2>Welcome, Admin</h2>
         <p>Select an action from the drawer.</p>
       </div>
   
@@ -543,6 +553,147 @@
       {{ errorMessage }}
     </div>
   </div>
+  
+
+  <!-- *************************Vendors Section******************************** -->
+
+  <!-- ****Getting all the vendors**** -->
+  <div *ngIf="isShowingVendors">
+    <h2>All Vendors</h2>
+    <table class="vendor-table">
+      <thead>
+        <tr>
+          <th>Vendor ID</th>
+          <th>Name</th>
+          <th>Contact Details</th>
+          <th>Material Supplied</th>
+          <th>Contract Terms</th>
+          <th>Delivery Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendor of vendors">
+          <td>{{ vendor.vendorId }}</td>
+          <td>{{ vendor.name }}</td>
+          <td>{{ vendor.contactDetails }}</td>
+          <td>{{ vendor.materialSupplied }}</td>
+          <td>{{ vendor.contractTerms }}</td>
+          <td>{{ vendor.deliveryStatus }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- *****Adding the vendors**** -->
+  <div *ngIf="isAddingVendor">
+    <h2>Add Vendor</h2>
+    <form (ngSubmit)="addVendor()" class="add-vendor-form">
+      <label>
+        Name:
+        <input
+          type="text"
+          [(ngModel)]="addVendorData.name"
+          name="name"
+          placeholder="Enter vendor name"
+          required
+        />
+      </label>
+      <label>
+        Contact Details:
+        <input
+          type="text"
+          [(ngModel)]="addVendorData.contactDetails"
+          name="contactDetails"
+          placeholder="Enter contact details"
+          required
+        />
+      </label>
+      <label>
+        Material Supplied:
+        <input
+          type="text"
+          [(ngModel)]="addVendorData.materialSupplied"
+          name="materialSupplied"
+          placeholder="Enter material supplied"
+          required
+        />
+      </label>
+      <label>
+        Contract Terms:
+        <input
+          type="text"
+          [(ngModel)]="addVendorData.contractTerms"
+          name="contractTerms"
+          placeholder="Enter contract terms"
+          required
+        />
+      </label>
+      <label>
+        Delivery Status:
+        <input
+          type="text"
+          [(ngModel)]="addVendorData.deliveryStatus"
+          name="deliveryStatus"
+          placeholder="Enter delivery status"
+          required
+        />
+      </label>
+      <button type="submit">Add Vendor</button>
+    </form>
+  </div>
+
+  <!-- ****Update delivery status of vendor****  -->
+
+  <div *ngIf="isUpdatingVendor">
+    <h2>Update Vendor Delivery Status</h2>
+    <form (ngSubmit)="updateVendorStatus()" class="update-vendor-status-form">
+      <label>
+        Vendor ID:
+        <input
+          type="number"
+          [(ngModel)]="updateVendorStatusData.vendorId"
+          name="vendorId"
+          placeholder="Enter Vendor ID"
+          required
+        />
+      </label>
+      <label>
+        Delivery Status:
+        <select [(ngModel)]="updateVendorStatusData.deliveryStatus" name="deliveryStatus" required>
+          <option value="Delivered">Delivered</option>
+          <option value="Not Delivered">Not Delivered</option>
+        </select>
+      </label>
+      <button type="submit">Update Status</button>
+    </form>
+  </div>
+
+  <!-- ****Remove Vendor****  -->
+  <div *ngIf="isRemovingVendor">
+    <h2>Remove Vendor</h2>
+    <form (ngSubmit)="removeVendor()" class="remove-vendor-form">
+      <label>
+        Vendor ID:
+        <input
+          type="number"
+          [(ngModel)]="removeVendorData.vendorId"
+          name="vendorId"
+          placeholder="Enter Vendor ID"
+          required
+        />
+      </label>
+      <button type="submit">Delete Vendor</button>
+    </form>
+  
+    <!-- Success/Error Message -->
+    <div *ngIf="statusMessage" class="status-message">
+      {{ statusMessage }}
+    </div>
+  </div>
+  
+  
+  
+  
   
   
     </div>

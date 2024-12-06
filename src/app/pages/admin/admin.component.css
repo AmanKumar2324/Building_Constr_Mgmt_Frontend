@@ -636,3 +636,185 @@
 }
 
 
+/* *****************************Vendor section styling******************************************** */
+
+/* Vendor Table Styling */
+.vendor-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.vendor-table th,
+.vendor-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.vendor-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+.vendor-table td {
+  color: #555;
+}
+
+.vendor-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Add Vendor Form Styling */
+.add-vendor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-vendor-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-vendor-form input {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.add-vendor-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-vendor-form button:hover {
+  background-color: #45a049;
+}
+
+
+/* Update Vendor Status Form Styling */
+.update-vendor-status-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-vendor-status-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.update-vendor-status-form input,
+.update-vendor-status-form select {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.update-vendor-status-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-vendor-status-form button:hover {
+  background-color: #45a049;
+}
+
+/* Success/Error Message Styling */
+.status-message {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: green; /* Change to red for error messages */
+}
+
+/* Remove Vendor Form Styling */
+.remove-vendor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.remove-vendor-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.remove-vendor-form input {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.remove-vendor-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-vendor-form button:hover {
+  background-color: #d32f2f;
+}
+
+/* Success/Error Message Styling */
+.status-message {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: green; /* Green for success, can be changed for error messages */
+}
+
+
