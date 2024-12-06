@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -12,6 +12,52 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
+
+  colors: string[] = [
+    'rgb(137, 168, 178)',
+    'rgb(179, 200, 207)',
+    'rgb(229, 225, 218)',
+    // 'rgb(241, 240, 232)',
+    'rgb(205, 193, 255)',
+    'rgb(208, 232, 197)',
+  ];
+
+  profileButtons = [
+    { action: 'viewProfile', label: 'View Profile' },
+    { action: 'editProfile', label: 'Edit Profile' }
+  ];
+
+  usersButtons = [
+    { action: 'addUser', label: 'Add User' },
+    { action: 'viewAllUsers', label: 'View All Users' },
+    { action: 'viewUserById', label: 'View User By Id' },
+    { action: 'removeUser', label: 'Remove User' },
+    { action: 'updateUser', label: 'Update User' }
+  ];
+  projectsButtons = [
+    { action: 'addProject', label: 'Add Project' },
+    { action: 'viewAllProjects', label: 'View All Projects' },
+    { action: 'viewProjectById', label: 'View Project By Id' },
+    { action: 'removeProject', label: 'Remove Project' },
+    { action: 'updateProject', label: 'Update Project' }
+  ];
+
+  vendorsButtons = [
+    { action: 'viewAllVendors', label: 'View Vendors' },
+    { action: 'addVendor', label: 'Add Vendor' },
+    { action: 'updateVendor', label: 'Modify Vendor' },
+    { action: 'removeVendor', label: 'Remove Vendor' }
+  ];
+
+  rolesButtons = [
+    { action: 'addRole', label: 'Add Role' },
+    { action: 'viewRole', label: 'View Role' }
+  ];
+
+  reportsButtons = [
+    { action: 'generateReport', label: 'Generate Report' },
+    { action: 'viewReports', label: 'View Reports' }
+  ];
   drawerOpen: boolean = false; // Tracks if the drawer is open
   currentDrawer: string | null = null; // Tracks the current drawer content
   isShowingUsers: boolean = false; // Tracks if "All Users" table is being displayed

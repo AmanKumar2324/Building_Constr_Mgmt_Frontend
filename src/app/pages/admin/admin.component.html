@@ -30,41 +30,57 @@
     </div>
   
     <!-- Drawer -->
-    <div class="drawer" *ngIf="drawerOpen" [ngClass]="{'drawer-open': drawerOpen}">
-      <!-- Content inside drawer based on the current section -->
-      <div *ngIf="currentDrawer === 'profile'">
-        <button (click)="handleAction('viewProfile')">View Profile</button>
-        <button (click)="handleAction('editProfile')">Edit Profile</button>
-      </div>
-      <div *ngIf="currentDrawer === 'users'">
-        <button (click)="handleAction('addUser')">Add User</button>
-        <button (click)="handleAction('viewAllUsers')">View All Users</button>
-        <button (click)="handleAction('viewUserById')">View User By Id</button>
-        <button (click)="handleAction('removeUser')">Remove User</button>
-        <button (click)="handleAction('updateUser')">Update User</button>
-      </div>
-      <div *ngIf="currentDrawer === 'projects'">
-        <button (click)="handleAction('addProject')">Add Project</button>
-        <button (click)="handleAction('viewAllProjects')">View All Projects</button>
-        <button (click)="handleAction('viewProjectById')">View Project By Id</button>
-        <button (click)="handleAction('removeProject')">Remove Project</button>
-        <button (click)="handleAction('updateProject')">Update Project</button>
-      </div>
-      <div *ngIf="currentDrawer === 'vendors'">
-        <button (click)="handleAction('viewAllVendors')">View Vendors</button>
-        <button (click)="handleAction('addVendor')">Add Vendors</button>
-        <button (click)="handleAction('updateVendor')">Modify Vendor</button>
-        <button (click)="handleAction('removeVendor')">Remove Vendor</button>
-      </div>
-      <div *ngIf="currentDrawer === 'roles'">
-        <button (click)="handleAction('addRole')">Add Role</button>
-        <button (click)="handleAction('viewRole')">View Role</button>
-      </div>
-      <div *ngIf="currentDrawer === 'reports'">
-        <button (click)="handleAction('generateReport')">Generate Report</button>
-        <button (click)="handleAction('viewReports')">View Reports</button>
-      </div>
-    </div>
+    <!-- Drawer -->
+<div class="drawer" *ngIf="drawerOpen" [ngClass]="{'drawer-open': drawerOpen}">
+  <div *ngIf="currentDrawer === 'profile'">
+    <button *ngFor="let button of profileButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
+  <div *ngIf="currentDrawer === 'users'">
+    <button *ngFor="let button of usersButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
+  <div *ngIf="currentDrawer === 'projects'">
+    <button *ngFor="let button of projectsButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
+  <div *ngIf="currentDrawer === 'vendors'">
+    <button *ngFor="let button of vendorsButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
+  <div *ngIf="currentDrawer === 'roles'">
+    <button *ngFor="let button of rolesButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
+  <div *ngIf="currentDrawer === 'reports'">
+    <button *ngFor="let button of reportsButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+</div>
+
   
     <!-- Actions Container -->
     <div class="actions-container">
