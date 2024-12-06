@@ -1,7 +1,7 @@
 /* Admin Container */
 .admin-container {
     display: flex;
-    height: 100vh;
+    /* height: 100vh; */
     overflow: hidden;
     background-color: white;
   }
@@ -116,7 +116,7 @@
   
   /* Actions Container */
   .actions-container {
-    background-color: red;
+    background-color: var(--background-color);
     margin-left: 100px;
     padding: 2rem;
     flex-grow: 1;
@@ -128,3 +128,511 @@
     margin-left: 410px; /* Adjust this to accommodate the expanded drawer */
   }
   
+  /* User Table Styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.user-table th,
+.user-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.user-table th {
+  background-color: #f4f4f4;
+  color: #171717;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.user-table tr:hover {
+  background-color: #e0e0e0;
+}
+
+
+/* Adding the user  */
+/* Add User Form Styling */
+.add-user-form {
+  display: flex;
+  flex-direction: column; /* Arrange items in a column */
+  gap: 1rem; /* Add space between form fields */
+  max-width: 400px; /* Restrict the form width */
+  margin: 1rem auto; /* Center the form horizontally */
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background for contrast */
+  border: 1px solid #ddd; /* Add a subtle border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Form Labels */
+.add-user-form label {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form Inputs */
+.add-user-form input[type="text"],
+.add-user-form input[type="password"],
+.add-user-form input[type="email"],
+.add-user-form input[type="checkbox"] {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Checkbox Styling */
+.add-user-form input[type="checkbox"] {
+  width: auto; /* Default size for checkboxes */
+}
+
+/* Submit Button */
+.add-user-form button {
+  padding: 0.8rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #9068fd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-user-form button:hover {
+  background-color: #774fd3; /* Darker shade for hover */
+}
+
+
+/* Remove User Form Styling */
+.remove-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Add space between form fields */
+  max-width: 400px; /* Restrict the form width */
+  margin: 1rem auto; /* Center the form horizontally */
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background for contrast */
+  border: 1px solid #ddd; /* Add a subtle border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Form Labels */
+.remove-user-form label {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form Inputs */
+.remove-user-form input[type="text"] {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Submit Button */
+.remove-user-form button {
+  padding: 0.8rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ff4d4f; /* Red for delete action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-user-form button:hover {
+  background-color: #d9363e; /* Darker red for hover */
+}
+
+
+/* Update User Form Styling */
+.update-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Add space between form fields */
+  max-width: 400px; /* Restrict the form width */
+  margin: 1rem auto; /* Center the form horizontally */
+  padding: 2rem;
+  background-color: #f9f9f9; /* Light background for contrast */
+  border: 1px solid #ddd; /* Add a subtle border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Form Labels */
+.update-user-form label {
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form Inputs */
+.update-user-form input[type="text"],
+.update-user-form input[type="password"],
+.update-user-form input[type="email"],
+.update-user-form input[type="checkbox"] {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Submit Button */
+.update-user-form button {
+  padding: 0.8rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #4caf50; /* Green for update action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-user-form button:hover {
+  background-color: #45a049; /* Darker green for hover */
+}
+
+/* Get User Form Styling */
+.get-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.get-user-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.get-user-form input {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.get-user-form button {
+  padding: 0.8rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.get-user-form button:hover {
+  background-color: #45a049;
+}
+
+/* User Details Table */
+.user-details-table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+}
+
+.user-details-table th, .user-details-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.user-details-table th {
+  background-color: #f4f4f4;
+}
+
+
+/* Project Table Styling */
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 14px;
+  border: 1px solid red;
+}
+
+.project-table th,
+.project-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.project-table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.project-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.project-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.project-table td {
+  color: #555;
+}
+
+
+/* Add Project Form Styling */
+.add-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-project-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-project-form input,
+.add-project-form select {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.add-project-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #9068fd;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-project-form button:hover {
+  background-color: #774fd3;
+}
+
+/* Remove Project Form Styling */
+.remove-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.remove-project-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.remove-project-form input {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.remove-project-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-project-form button:hover {
+  background-color: #d43f3f;
+}
+
+
+/* Update Project Form Styling */
+.update-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-project-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.update-project-form input,
+.update-project-form select {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.update-project-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #9068fd;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-project-form button:hover {
+  background-color: #774fd3;
+}
+
+
+/* Get Project Form Styling */
+.get-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.get-project-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #333;
+}
+
+.get-project-form input {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.get-project-form button {
+  padding: 0.8rem 1.5rem;
+  background-color: #9068fd;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.get-project-form button:hover {
+  background-color: #774fd3;
+}
+
+/* Project Details Table */
+.project-details-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.project-details-table th,
+.project-details-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.project-details-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+.project-details-table td {
+  color: #555;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+
