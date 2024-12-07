@@ -18,13 +18,17 @@
           <i class="material-icons">store</i>
           <span>Vendors</span>
         </li>
-        <li (click)="toggleDrawer('roles')">
-          <i class="material-icons">security</i>
-          <span>Roles</span>
+        <li (click)="toggleDrawer('expense')">
+          <i class="material-icons">account_balance_wallet</i>
+          <span>Expenses</span>
         </li>
         <li (click)="toggleDrawer('reports')">
           <i class="material-icons">bar_chart</i>
           <span>Reports</span>
+        </li>
+        <li (click)="handleAction('logout')">
+          <i class="material-icons">exit_to_app</i>
+          <span>Logout</span>
         </li>
       </ul>
     </div>
@@ -64,8 +68,8 @@
     </button>
   </div>
 
-  <div *ngIf="currentDrawer === 'roles'">
-    <button *ngFor="let button of rolesButtons; let i = index" 
+  <div *ngIf="currentDrawer === 'expense'">
+    <button *ngFor="let button of expenseButtons; let i = index" 
             [ngStyle]="{'background-color': colors[i % colors.length]}" 
             (click)="handleAction(button.action)">
       {{ button.label }}
@@ -707,6 +711,179 @@
     </div>
   </div>
   
+  <!-- **************************Project Expenses************************************************* -->
+
+  <!-- ****view expenses by project**** -->
+  <div *ngIf="isShowingExpensess">
+    <h2>View Expenses by Project</h2>
+    
+    <!-- Form to Enter Project ID -->
+    <form (ngSubmit)="fetchExpensesByProject()" class="expense-form">
+      <label>
+        Project ID:
+        <input
+          type="number"
+          [(ngModel)]="projectId"
+          name="projectId"
+          placeholder="Enter Project ID"
+          required
+        />
+      </label>
+      <button type="submit">View Expenses</button>
+    </form>
+  
+    <!-- Table to Display Expenses -->
+    <div *ngIf="expenses && expenses.length > 0" class="expense-table-container">
+      <h3>Expenses for Project ID: {{ projectId }}</h3>
+      <table class="expense-table">
+        <thead>
+          <tr>
+            <th>Finance ID</th>
+            <th>Project ID</th>
+            <th>Expense Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let expense of expenses">
+            <td>{{ expense.financeId }}</td>
+            <td>{{ expense.projectId }}</td>
+            <td>{{ expense.expenseType }}</td>
+            <td>{{ expense.amount | currency }}</td>
+            <td>{{ expense.date | date }}</td>
+            <td>
+              <span [ngClass]="{'status-success': expense.paymentStatus === 'Successful'}">
+                {{ expense.paymentStatus }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Message if No Expenses Found -->
+    <div *ngIf="expenses && expenses.length === 0" class="no-expenses-message">
+      <p>No expenses found for the given Project ID.</p>
+    </div>
+  </div>
+  
+
+  <!-- ****Adding the expense**** -->
+
+  <div *ngIf="isAddingExpense">
+    <h2>Add Expense</h2>
+    <form (ngSubmit)="addExpense()" class="add-expense-form">
+      <label>
+        Project ID:
+        <input
+          type="number"
+          [(ngModel)]="addExpenseData.projectId"
+          name="projectId"
+          placeholder="Enter Project ID"
+          required
+        />
+      </label>
+      <label>
+        Expense Type:
+        <input
+          type="text"
+          [(ngModel)]="addExpenseData.expenseType"
+          name="expenseType"
+          placeholder="Enter Expense Type"
+          required
+        />
+      </label>
+      <label>
+        Amount:
+        <input
+          type="number"
+          [(ngModel)]="addExpenseData.amount"
+          name="amount"
+          placeholder="Enter Amount"
+          required
+        />
+      </label>
+      <label>
+        Date:
+        <input
+          type="date"
+          [(ngModel)]="addExpenseData.date"
+          name="date"
+          placeholder="Select Date"
+          required
+        />
+      </label>
+      <label>
+        Payment Status:
+        <select [(ngModel)]="addExpenseData.paymentStatus" name="paymentStatus" required>
+          <option value="Successful">Successful</option>
+          <option value="Failed">Failed</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </label>
+      <button type="submit">Add Expense</button>
+    </form>
+  </div>
+  
+
+  <!-- ************************************Reports section******************************************* -->
+  <div *ngIf="isGettingReport">
+    <h2>View Report by Project ID</h2>
+  
+    <!-- Form to Enter Project ID -->
+    <form (ngSubmit)="fetchReportByProjectId()" class="report-form">
+      <label>
+        Project ID:
+        <input
+          type="number"
+          [(ngModel)]="projectId"
+          name="projectId"
+          placeholder="Enter Project ID"
+          required
+        />
+      </label>
+      <button type="submit">View Report</button>
+    </form>
+  
+    <!-- Table to Display Reports -->
+    <div *ngIf="reports && reports.length > 0" class="report-table-container">
+      <h3>Reports for Project ID: {{ projectId }}</h3>
+    
+      <!-- Scrollable Table Container -->
+      <div class="scrollable-table-container">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Report ID</th>
+              <th>Report Type</th>
+              <th>Generated Date</th>
+              <th>Data</th>
+              <th>Created By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reports">
+              <td>{{ report.reportId }}</td>
+              <td>{{ report.reportType }}</td>
+              <td>{{ report.generatedDate | date }}</td>
+              <td>
+                <pre>{{ report.data | json }}</pre>
+              </td>
+              <td>{{ report.createdBy }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  
+    <!-- Message if No Reports Found -->
+    <div *ngIf="reports && reports.length === 0" class="no-reports-message">
+      <p>No reports found for the given Project ID.</p>
+    </div>
+  </div>
   
   
   

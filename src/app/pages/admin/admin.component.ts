@@ -14,12 +14,13 @@ import { RouterModule } from '@angular/router';
 export class AdminComponent {
 
   colors: string[] = [
+    'rgb(205, 193, 255)',
+    'rgb(208, 232, 197)',
     'rgb(137, 168, 178)',
     'rgb(179, 200, 207)',
     'rgb(229, 225, 218)',
     // 'rgb(241, 240, 232)',
-    'rgb(205, 193, 255)',
-    'rgb(208, 232, 197)',
+
   ];
 
   profileButtons = [
@@ -49,15 +50,17 @@ export class AdminComponent {
     { action: 'removeVendor', label: 'Remove Vendor' }
   ];
 
-  rolesButtons = [
-    { action: 'addRole', label: 'Add Role' },
-    { action: 'viewRole', label: 'View Role' }
+  expenseButtons = [
+    { action: 'addExpense', label: 'Add Expense' },
+    { action: 'viewExpence', label: 'View Expense' }
   ];
 
   reportsButtons = [
-    { action: 'generateReport', label: 'Generate Report' },
+    // { action: 'generateReport', label: 'Generate Report' },
     { action: 'viewReports', label: 'View Reports' }
   ];
+  isLogoutModalOpen: boolean = false; // Tracks if the logout confirmation modal is open
+
   drawerOpen: boolean = false; // Tracks if the drawer is open
   currentDrawer: string | null = null; // Tracks the current drawer content
   isShowingUsers: boolean = false; // Tracks if "All Users" table is being displayed
@@ -90,6 +93,23 @@ export class AdminComponent {
   isAddingVendor: boolean = false;
   isUpdatingVendor: boolean = false;
   isRemovingVendor: boolean = false;
+
+
+  //Project Expensens
+
+  projectId: number | null = null; // Stores the project ID input by the user
+  expenses: any[] = []; // Stores the fetched expense data
+  isShowingExpensess: boolean = false;
+  isAddingExpense: boolean = false; // Tracks if "Add User" form is being displayed
+
+
+  //Reports
+  reports: any[] = []; // Stores the fetched report data
+  isGettingReport: boolean = false;
+
+
+
+
 
 
 
@@ -146,6 +166,14 @@ export class AdminComponent {
       materialSupplied: '',
       contractTerms: '',
       deliveryStatus: '',
+    };
+    
+    addExpenseData: any = {
+      projectId: null,
+      expenseType: '',
+      amount: null,
+      date: '',
+      paymentStatus: 'Successful', // Default value
     };
     
     
@@ -639,6 +667,119 @@ resetUpdateProjectForm() {
     this.isRemovingVendor = true; // Show the form
   }
   
+
+  // ********************************************Expenses Section**********************************
+
+  fetchExpensesByProject() {
+    // Check if the Project ID is valid before proceeding
+    if (this.projectId === null || this.projectId === undefined || this.projectId <= 0) {
+      alert('Please enter a valid Project ID.');
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Finance/by-project/${this.projectId}`;
+  
+    // Send GET request to fetch expenses for the given project ID
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.expenses = response; // Store the fetched expenses
+        console.log('Expenses fetched successfully:', this.expenses);
+      },
+      error: (err) => {
+        console.error('Error fetching expenses:', err);
+        alert('Failed to fetch expenses. Please try again.');
+      },
+    });
+  }
+  
+
+  resetExpensesView() {
+    this.projectId = null;
+    this.expenses = [];
+  }
+  
+  showAllExpenses() {
+    this.isShowingExpensess = true; // Show the "All Users" table
+    this.fetchExpensesByProject(); // Fetch users from API
+  }
+  
+
+  //Adding the expenses
+
+  addExpense() {
+    if (
+      !this.addExpenseData.projectId ||
+      !this.addExpenseData.expenseType.trim() ||
+      !this.addExpenseData.amount ||
+      !this.addExpenseData.date ||
+      !this.addExpenseData.paymentStatus.trim()
+    ) {
+      alert('All fields are required.');
+      return;
+    }
+  
+    const apiUrl = 'https://localhost:7185/api/Finance';
+  
+    this.http.post(apiUrl, this.addExpenseData).subscribe({
+      next: (response) => {
+        alert('Expense added successfully!');
+        this.resetAddExpenseForm();
+      },
+      error: (err) => {
+        console.error('Error adding expense:', err);
+        alert('Failed to add expense. Please try again.');
+      },
+    });
+  }
+
+  resetAddExpenseForm() {
+    this.addExpenseData = {
+      projectId: null,
+      expenseType: '',
+      amount: null,
+      date: '',
+      paymentStatus: 'Successful',
+    };
+    this.currentAction = null; // Reset the current action
+  }
+  showAddExpenseForm() {
+    this.isAddingExpense = true; // Show the form
+    this.isShowingExpensess = false; // Hide the users table
+  }
+
+
+
+  // *****************************************Reports Section****************************************
+  fetchReportByProjectId() {
+    if (!this.projectId || this.projectId <= 0) {
+      alert('Please enter a valid Project ID.');
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Report/by-project/${this.projectId}`;
+  
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.reports = response; // Store the fetched reports
+        console.log('Reports fetched successfully:', this.reports);
+      },
+      error: (err) => {
+        console.error('Error fetching reports:', err);
+        alert('Failed to fetch reports. Please try again.');
+      },
+    });
+  }
+  
+
+  resetReportView() {
+    this.projectId = null;
+    this.reports = [];
+  }
+  
+  showGetReportForm() {
+    this.isGettingReport = true;
+  }
+  
   
 
 /********************************************Handling all the actions****************************************************************** */
@@ -699,9 +840,42 @@ resetUpdateProjectForm() {
       this.showRemoveVendorForm();
       this.resetRemoveVendorForm();
     }
+    else 
+    if (action === 'viewExpence') {
+      console.log('View Expenses by Project form opened');
+      this.showAllExpenses();
+      this.resetExpensesView(); // Reset the state when the action is triggered
+    }
+    else if (action === 'addExpense') {
+      console.log('Add Expense form opened');
+      this.isAddingExpense = true;
+      this.resetAddExpenseForm();
+    }
+    else if (action === 'viewReports') {
+      console.log('View Report by Project ID form opened');
+      this.showGetReportForm();
+      this.resetReportView();
+    }
+    else if (action === 'logout') {
+      this.logout(); // Call the logout method
+    }
     
   }
   resetDefaultMessage() {
     this.isDrawerActionSelected = false; // Show default message again when necessary
   }
+
+  //Logout
+
+  logout() {
+    // Confirm logout action
+    const confirmed = confirm('Are you sure you want to logout?');
+    if (confirmed) {
+      localStorage.clear(); // Clear local storage
+      alert('You have been logged out successfully!');
+      window.location.href = '/login'; // Redirect to the login page
+    }
+  }
+  
+
 }
