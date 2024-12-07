@@ -74,7 +74,7 @@
   
   /* Active Drawer */
   .drawer-open {
-    width: 300px; /* The width when drawer is open (can be adjusted) */
+    width: 270px; /* The width when drawer is open (can be adjusted) */
   }
   
   /* Buttons inside the drawer */
@@ -1453,3 +1453,79 @@
 .task-form button:hover {
   background-color: #45a049;
 }
+
+
+/* *********** Notificatins Sections ****************** */
+/* Notifications Section */
+.notifications-container {
+    /* display: flex; */
+    flex-wrap: wrap; /* Allows wrapping of items when there's no space */
+    justify-content: space-around; /* Distributes the cards with space around them */
+    gap: 1rem; /* Adds space between each task card */
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .notifications-cards{
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  /* Task Card */
+  .task-card {
+    /* width: 200px; */
+    height: 150px;
+    width: 220px;
+    background-color: rgb(205, 193, 255);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  /* Task Card Header */
+  .task-card h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  /* Task Card Content */
+  .task-card p {
+    margin: 0.5rem 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Task Card Button */
+  .task-card button {
+    
+    width: 100%;
+    height: 45px;
+    padding: 0.2rem;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: var(--primary-button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .task-card button:hover {
+    background-color: #774fd3;
+  }
+  
+  /* No Notifications */
+  .no-notifications {
+    text-align: center;
+    margin-top: 2rem;
+    color: #777;
+    font-size: 16px;
+  }
+  

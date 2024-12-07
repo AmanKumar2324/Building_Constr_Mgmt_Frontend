@@ -1118,6 +1118,25 @@
       <button type="submit">Assign Task</button>
     </form>
   </div>
+
+    <!-- *******Notifications Section****** -->
+    <div *ngIf="notifications.length > 0" class="notifications-container">
+      <h2>Latest Notifications</h2>
+    
+  <div class="notifications-cards">
+      <div *ngFor="let task of notifications" class="task-card">
+          <h3>{{ task.taskName }}</h3>
+          <p><strong>Start Date:</strong> {{ task.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ task.endDate | date }}</p>
+          <button (click)="markTaskAsCompleted(task.taskId, task.projectId)">Complete Task</button>
+        </div>
+  </div>
+    </div>
+    
+    <!-- No Notifications -->
+    <div *ngIf="notifications.length === 0" class="no-notifications">
+      <p>No tasks assigned to you.</p>
+    </div>
   
   
   

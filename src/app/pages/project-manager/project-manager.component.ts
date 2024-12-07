@@ -123,6 +123,11 @@ export class ProjectManagerComponent {
   delayedTasks: any[] = []; // Stores the delayed tasks
   isShowingDelayedTask: boolean = false;
 
+    //Notifications
+    notifications: any[] = []; // Stores tasks assigned to the logged-in user
+    roleUserId: string = '';
+    isShowingNotification: boolean = false;
+
 
     //Form data for Adding the users
     addUserData: any = {
@@ -934,8 +939,61 @@ resetUpdateProjectForm() {
       this.assignTask();
 
     }
-  
-
+  // *********************************Notifications Section********************************
+    ngOnInit() {
+      // Retrieve roleUserId from localStorage
+      this.roleUserId = localStorage.getItem('roleUserId') || '';
+      if (!this.roleUserId) {
+        console.error('Role User ID is missing.');
+        alert('Role User ID is missing. Please log in again.');
+        // this.router.navigate(['/login']); // Redirect to login page
+        return;
+      }
+    
+      // Fetch assigned tasks or perform any other role-based actions
+      this.fetchAssignedTasks();
+    }
+    fetchAssignedTasks() {
+      const apiUrl = `https://localhost:7185/api/Task/assigned-to/${this.roleUserId}`;
+      this.http.get<any[]>(apiUrl).subscribe({
+        next: (response) => {
+          this.notifications = response;
+          console.log('Assigned tasks:', this.notifications);
+        },
+        error: (err) => {
+          console.error('Error fetching assigned tasks:', err);
+          alert('Failed to fetch tasks. Please try again.');
+        }
+      });
+    }
+    
+    markTaskAsCompleted(taskId: number, projectId: number) {
+      const apiUrl = `https://localhost:7185/api/Task/${taskId}/status`;
+    
+      // Prepare the request body with status and projectId
+      const body = {
+        status: 'Completed', // Or other status based on your requirement
+        projectId: projectId
+      };
+    
+      this.http.put(apiUrl, body, { headers: { 'Content-Type': 'application/json' } }).subscribe({
+        next: (response) => {
+          alert('Task marked as completed successfully!');
+          // Handle task completion logic here
+        },
+        error: (err) => {
+          console.error('Error marking task as completed:', err);
+          alert('Error marking task as completed');
+        },
+      });
+    }
+    
+    
+    
+    showNotificationForm(){
+      this.isShowingNotification = true;
+      this.fetchAssignedTasks();
+    }
 /********************************************Handling all the actions****************************************************************** */
 
 resetActionContainer() {
