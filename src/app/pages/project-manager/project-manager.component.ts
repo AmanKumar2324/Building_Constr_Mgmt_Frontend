@@ -42,6 +42,12 @@ export class ProjectManagerComponent {
     { action: 'removeProject', label: 'Remove Project' },
     { action: 'updateProject', label: 'Update Project' }
   ];
+  tasksButtons = [
+    { action: 'addTask', label: 'Assign Task' },
+    { action: 'viewTaskById', label: 'View Tasks By Project Id' },
+    { action: 'viewDelayedTask', label: 'View Delayed Task' },
+    { action: 'viewTaskByPriority', label: 'View Priority Task' },
+  ];
 
   vendorsButtons = [
     { action: 'viewAllVendors', label: 'View Vendors' },
@@ -93,6 +99,7 @@ export class ProjectManagerComponent {
   isAddingVendor: boolean = false;
   isUpdatingVendor: boolean = false;
   isRemovingVendor: boolean = false;
+  isAssigningTask: boolean = false;
 
 
   //Project Expensens
@@ -107,13 +114,14 @@ export class ProjectManagerComponent {
   reports: any[] = []; // Stores the fetched report data
   isGettingReport: boolean = false;
 
-
-
-
-
-
-
-
+  //Tasks
+  projectIdToFetch: number | null = null; // To store the project ID input
+  tasks: any[] = []; // To store the fetched tasks
+  isGettingTask: boolean = false;
+  selectedPriority: string = 'high'; // Default priority
+  isShowingTaskByPriority: boolean = false;
+  delayedTasks: any[] = []; // Stores the delayed tasks
+  isShowingDelayedTask: boolean = false;
 
 
     //Form data for Adding the users
@@ -175,6 +183,17 @@ export class ProjectManagerComponent {
       date: '',
       paymentStatus: 'Successful', // Default value
     };
+
+    assignTaskData: any = {
+      projectId: null,
+      taskName: '',
+      assignedTo: '',
+      startDate: '',
+      endDate: '',
+      priority: 'High',
+      status: 'Assigned'
+    }; // Stores the task details to be assigned
+    
     
     
     
@@ -780,6 +799,141 @@ resetUpdateProjectForm() {
     this.isGettingReport = true;
   }
   
+
+
+  // ************************************************Task Sections******************************************************************
+
+  fetchTasksByProjectId() {
+    if (!this.projectIdToFetch || this.projectIdToFetch <= 0) {
+      this.errorMessage = 'Please enter a valid Project ID.';
+      this.tasks = [];
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Task/by-project/${this.projectIdToFetch}`;
+  
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.tasks = response; // Store the task data
+        this.errorMessage = null; // Clear any error message
+        console.log('Tasks fetched successfully:', this.tasks);
+      },
+      error: (err) => {
+        this.tasks = []; // Clear task data
+        this.errorMessage = 'No tasks found for the given Project ID.';
+        console.error('Error fetching tasks:', err);
+      },
+    });
+  }
+  
+  resetTaskView() {
+    this.projectIdToFetch = null;
+    this.tasks = [];
+    this.errorMessage = null;
+  }
+  
+  showGetTaskForm() {
+    this.isGettingTask = true;
+  }
+
+  // ****Fetching task by priority****
+
+  fetchTasksByPriority() {
+    if (!this.selectedPriority) {
+      this.errorMessage = 'Please select a valid priority.';
+      this.tasks = [];
+      return;
+    }
+  
+    const apiUrl = `https://localhost:7185/api/Task/bypriority/${this.selectedPriority}`;
+  
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.tasks = response; // Store the task data
+        this.errorMessage = null; // Clear any error message
+        console.log('Tasks fetched successfully:', this.tasks);
+      },
+      error: (err) => {
+        this.tasks = []; // Clear task data
+        this.errorMessage = 'No tasks found for the selected priority.';
+        console.error('Error fetching tasks:', err);
+      },
+    });
+  }
+    showTaskByPRiorityForm(){
+      this.isShowingTaskByPriority=true;
+    }
+
+    // ****Delayed Tasks****
+    fetchDelayedTasks() {
+      const apiUrl = 'https://localhost:7185/api/Task/delayed';
+    
+      this.http.get<any[]>(apiUrl).subscribe({
+        next: (response) => {
+          this.delayedTasks = response; // Store the delayed task data
+          this.errorMessage = null; // Clear any error message
+          console.log('Delayed tasks fetched successfully:', this.delayedTasks);
+        },
+        error: (err) => {
+          this.delayedTasks = []; // Clear task data
+          this.errorMessage = 'No delayed tasks found.';
+          console.error('Error fetching delayed tasks:', err);
+        },
+      });
+    }
+    
+    showDelayedTask(){
+      this.isShowingDelayedTask = true;
+      this.fetchDelayedTasks();
+    }
+
+    // ****Assign Task****
+
+    assignTask() {
+      const apiUrl = 'https://localhost:7185/api/Task'; // API endpoint for assigning task
+    
+      if (
+        !this.assignTaskData.projectId ||
+        !this.assignTaskData.taskName.trim() ||
+        !this.assignTaskData.assignedTo.trim() ||
+        !this.assignTaskData.startDate ||
+        !this.assignTaskData.endDate ||
+        !this.assignTaskData.priority ||
+        !this.assignTaskData.status
+      ) {
+        alert('All fields are required.');
+        return;
+      }
+    
+      this.http.post(apiUrl, this.assignTaskData).subscribe({
+        next: (response) => {
+          alert('Task assigned successfully!');
+          this.resetAssignTaskForm(); // Reset the form after success
+        },
+        error: (err) => {
+          console.error('Error assigning task:', err);
+          alert('Failed to assign task. Please try again.');
+        },
+      });
+    }
+    resetAssignTaskForm() {
+      this.assignTaskData = {
+        projectId: null,
+        taskName: '',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        priority: 'High',
+        status: 'Assigned'
+      };
+      this.currentAction = null; // Reset the action
+    }
+        
+    showAddTaskForm(){
+      this.isAssigningTask = true;
+      this.assignTask();
+
+    }
   
 
 /********************************************Handling all the actions****************************************************************** */
@@ -871,6 +1025,21 @@ resetActionContainer() {
     }
     else if (action === 'logout') {
       this.logout(); // Call the logout method
+    }else if (action === 'viewTaskById') {
+      this.showGetTaskForm();
+      this.resetTaskView(); // Reset form and table for tasks
+    }else
+    if (action === 'viewTaskByPriority') {
+      this.showTaskByPRiorityForm();
+      this.resetTaskView(); // Reset form and table for tasks
+    }
+    else if (action === 'viewDelayedTask') {
+      this.showDelayedTask();
+    }
+    else if (action === 'addTask') {
+      this.showAddTaskForm();
+      
+      this.resetAssignTaskForm(); // Show the assign task form
     }
     
   }

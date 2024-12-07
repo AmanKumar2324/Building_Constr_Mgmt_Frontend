@@ -14,6 +14,10 @@
           <i class="material-icons">business_center</i>
           <span>Projects</span>
         </li>
+        <li (click)="toggleDrawer('tasks')">
+            <i class="material-icons">assignment</i>
+            <span>Tasks</span>
+          </li>
         <li (click)="toggleDrawer('vendors')">
           <i class="material-icons">store</i>
           <span>Vendors</span>
@@ -60,6 +64,14 @@
     </button>
   </div>
 
+  <div *ngIf="currentDrawer === 'tasks'">
+    <button *ngFor="let button of tasksButtons; let i = index" 
+            [ngStyle]="{'background-color': colors[i % colors.length]}" 
+            (click)="handleAction(button.action)">
+      {{ button.label }}
+    </button>
+  </div>
+
   <div *ngIf="currentDrawer === 'vendors'">
     <button *ngFor="let button of vendorsButtons; let i = index" 
             [ngStyle]="{'background-color': colors[i % colors.length]}" 
@@ -90,7 +102,7 @@
     <div class="actions-container">
       <!-- Default Message -->
       <div *ngIf="!isDrawerActionSelected">
-        <h2>Welcome, Admin</h2>
+        <h2>Welcome, Project Manager</h2>
         <p>Select an action from the drawer.</p>
       </div>
   
@@ -884,6 +896,230 @@
       <p>No reports found for the given Project ID.</p>
     </div>
   </div>
+  
+
+  <!-- ********************************Task Section******************************************************** -->
+  <div *ngIf="isGettingTask" class="task-container">
+    <h2>View Tasks by Project ID</h2>
+  
+    <!-- Form to Enter Project ID -->
+    <form (ngSubmit)="fetchTasksByProjectId()" class="task-form">
+      <label>
+        Project ID:
+        <input
+          type="number"
+          [(ngModel)]="projectIdToFetch"
+          name="projectId"
+          placeholder="Enter Project ID"
+          required
+        />
+      </label>
+      <button type="submit">Get Tasks</button>
+    </form>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <!-- Task Table -->
+    <div *ngIf="tasks.length > 0" class="task-table-container">
+      <h3>Tasks for Project ID: {{ projectIdToFetch }}</h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Assigned To</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks">
+            <td>{{ task.taskId }}</td>
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.assignedTo }}</td>
+            <td>{{ task.startDate | date }}</td>
+            <td>{{ task.endDate | date }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="isShowingTaskByPriority" class="task-by-priority-container">
+    <h2>View Tasks by Priority</h2>
+  
+    <!-- Priority Selection Form -->
+    <form (ngSubmit)="fetchTasksByPriority()" class="priority-form">
+      <label>
+        Priority:
+        <select [(ngModel)]="selectedPriority" name="priority" required>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </label>
+      <button type="submit">Get Tasks</button>
+    </form>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <!-- Task Table -->
+    <div *ngIf="tasks.length > 0" class="task-table-container">
+      <h3>Tasks with Priority: {{ selectedPriority | uppercase }}</h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Assigned To</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasks">
+            <td>{{ task.taskId }}</td>
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.assignedTo }}</td>
+            <td>{{ task.startDate | date }}</td>
+            <td>{{ task.endDate | date }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ 
+  
+  <!-- ****Delayed Tasks****  -->
+  <div *ngIf="isShowingDelayedTask" class="delayed-task-container">
+    <h2>View Delayed Tasks</h2>
+  
+    <!-- Delayed Task Table -->
+    <div *ngIf="delayedTasks.length > 0" class="task-table-container">
+      <h3>Delayed Tasks</h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Assigned To</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of delayedTasks">
+            <td>{{ task.taskId }}</td>
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.assignedTo }}</td>
+            <td>{{ task.startDate | date }}</td>
+            <td>{{ task.endDate | date }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+
+
+  <!-- ****Adding the task**** -->
+
+  <div *ngIf="isAssigningTask" class="assign-task-container">
+    <h2>Assign Task</h2>
+  
+    <!-- Task Assignment Form -->
+    <form (ngSubmit)="assignTask()" class="task-form">
+      <label>
+        Project ID:
+        <input
+          type="number"
+          [(ngModel)]="assignTaskData.projectId"
+          name="projectId"
+          placeholder="Enter Project ID"
+          required
+        />
+      </label>
+      <label>
+        Task Name:
+        <input
+          type="text"
+          [(ngModel)]="assignTaskData.taskName"
+          name="taskName"
+          placeholder="Enter Task Name"
+          required
+        />
+      </label>
+      <label>
+        Assigned To (Role User ID):
+        <input
+          type="text"
+          [(ngModel)]="assignTaskData.assignedTo"
+          name="assignedTo"
+          placeholder="Enter Role User ID"
+          required
+        />
+      </label>
+      <label>
+        Start Date:
+        <input
+          type="datetime-local"
+          [(ngModel)]="assignTaskData.startDate"
+          name="startDate"
+          required
+        />
+      </label>
+      <label>
+        End Date:
+        <input
+          type="datetime-local"
+          [(ngModel)]="assignTaskData.endDate"
+          name="endDate"
+          required
+        />
+      </label>
+      <label>
+        Priority:
+        <select [(ngModel)]="assignTaskData.priority" name="priority" required>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </label>
+      <label>
+        Status:
+        <select [(ngModel)]="assignTaskData.status" name="status" required>
+          <option value="Assigned">Assigned</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </label>
+      <button type="submit">Assign Task</button>
+    </form>
+  </div>
+  
+  
   
   
   
