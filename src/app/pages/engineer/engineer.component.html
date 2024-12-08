@@ -906,7 +906,16 @@
   
   
   
+  <app-custom-alert
+  *ngIf="isAlertVisible"
+  [title]="'Confirm Logout'"
+  [message]="'Are you sure you want to logout?'"
+  [showCancel]="true"
+  (confirm)="onLogoutConfirm()"
+  (cancel)="onLogoutCancel()"
+  ></app-custom-alert>
   
+  <ng-container #alertContainer></ng-container>
   
   
   

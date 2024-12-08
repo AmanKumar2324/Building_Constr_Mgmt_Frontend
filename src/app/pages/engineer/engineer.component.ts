@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CustomAlertComponent } from '../../shared/custom-alert/custom-alert.component';
+import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/custon-message-alert.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule, CustomAlertComponent],
   templateUrl: './engineer.component.html',
   styleUrls: ['./engineer.component.css']
 })
@@ -174,7 +176,21 @@ export class EngineerComponent {
     
     
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver) {}
+
+    showCustomMessage(message: string, type: 'success' | 'error' | 'info') {
+      // Clear existing alerts
+      this.viewContainerRef.clear();
+  
+      // Dynamically create the alert component
+      const factory = this.componentFactoryResolver.resolveComponentFactory(CustomMessageAlertComponent);
+      const componentRef = this.viewContainerRef.createComponent(factory);
+  
+      // Pass data to the alert component
+      componentRef.instance.message = message;
+      componentRef.instance.type = type;
+    }
 
   // Toggles the drawer and sets the current drawer content
   toggleDrawer(drawer: string) {
@@ -382,13 +398,13 @@ addProject() {
   const apiUrl = 'https://localhost:7185/api/Project'; // API endpoint for adding projects
   this.http.post(apiUrl, this.addProjectData).subscribe({
     next: (response) => {
-      alert('Project added successfully!'); // Show success message
+      this.showCustomMessage('Project added successfully!', 'success');
       this.resetAddProjectForm(); // Reset the form after submission
       this.fetchAllProjects(); // Refresh the project list
     },
     error: (err) => {
       console.error('Error adding project:', err); // Log error for debugging
-      alert('Failed to add project. Please try again.');
+      this.showCustomMessage('Failed to add project, Please try again!', 'error');
     },
   });
 }
@@ -515,11 +531,12 @@ resetUpdateProjectForm() {
     this.http.get<any[]>(apiUrl).subscribe({
       next: (response) => {
         this.vendors = response; // Store the vendor data
-        console.log('Vendors fetched successfully:', this.vendors); // Debugging
+        console.log('Vendors fetched successfully:', this.vendors);
+        this.showCustomMessage('Available vendors fetched successfully!', 'success'); // Debugging
       },
       error: (err) => {
         console.error('Error fetching vendors:', err);
-        alert('Failed to fetch vendors. Please try again.');
+        this.showCustomMessage('Failed to fetch vendors. Please try again!', 'error');
       },
     });
   }
@@ -534,13 +551,13 @@ resetUpdateProjectForm() {
     const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for adding a vendor
     this.http.post(apiUrl, this.addVendorData).subscribe({
       next: () => {
-        alert('Vendor added successfully!');
+        this.showCustomMessage('Vendor added successfully!', 'success');
         this.resetAddVendorForm(); // Reset the form after submission
         this.fetchAllVendors(); // Refresh the vendor list
       },
       error: (err) => {
         console.error('Error adding vendor:', err);
-        alert('Failed to add vendor. Please try again.');
+        this.showCustomMessage('Failed to add vendor. Please retry!', 'error');
       },
     });
   }
@@ -652,7 +669,7 @@ resetUpdateProjectForm() {
   // Method to show confirmation message
   showConfirmationMessage(message: string) {
     // Using alert (basic method)
-    alert(message);
+    this.showCustomMessage(message, 'success');
   }
   
   
@@ -715,7 +732,7 @@ resetUpdateProjectForm() {
       !this.addExpenseData.date ||
       !this.addExpenseData.paymentStatus.trim()
     ) {
-      alert('All fields are required.');
+      this.showCustomMessage('All fields are required!', 'error');
       return;
     }
   
@@ -723,12 +740,12 @@ resetUpdateProjectForm() {
   
     this.http.post(apiUrl, this.addExpenseData).subscribe({
       next: (response) => {
-        alert('Expense added successfully!');
+        this.showCustomMessage('Expense added successfully!', 'success');
         this.resetAddExpenseForm();
       },
       error: (err) => {
         console.error('Error adding expense:', err);
-        alert('Failed to add expense. Please try again.');
+        this.showCustomMessage('Failed to add expense. Very all the fields and try again!', 'error');
       },
     });
   }
@@ -753,7 +770,7 @@ resetUpdateProjectForm() {
   // *****************************************Reports Section****************************************
   fetchReportByProjectId() {
     if (!this.projectId || this.projectId <= 0) {
-      alert('Please enter a valid Project ID.');
+      this.showCustomMessage('Enter a valid Project ID', 'error');
       return;
     }
   
@@ -766,7 +783,7 @@ resetUpdateProjectForm() {
       },
       error: (err) => {
         console.error('Error fetching reports:', err);
-        alert('Failed to fetch reports. Please try again.');
+        this.showCustomMessage('Failed to fetch reports!', 'error');
       },
     });
   }
@@ -788,7 +805,7 @@ ngOnInit() {
   this.roleUserId = localStorage.getItem('roleUserId') || '';
   if (!this.roleUserId) {
     console.error('Role User ID is missing.');
-    alert('Role User ID is missing. Please log in again.');
+    this.showCustomMessage('Role UserID missing. Login again', 'error');
     // this.router.navigate(['/login']); // Redirect to login page
     return;
   }
@@ -821,12 +838,12 @@ markTaskAsCompleted(taskId: number, projectId: number) {
 
   this.http.put(apiUrl, body, { headers: { 'Content-Type': 'application/json' } }).subscribe({
     next: (response) => {
-      alert('Task marked as completed successfully!');
+      this.showCustomMessage('Task completed!', 'success');
       // Handle task completion logic here
     },
     error: (err) => {
       console.error('Error marking task as completed:', err);
-      alert('Error Marking the task as completed.');
+      this.showCustomMessage('Task completed!', 'success');
     },
   });
 }
@@ -986,14 +1003,27 @@ resetActionContainer() {
 
   //Logout
 
+  // logout() {
+  //   // Confirm logout action
+  //   const confirmed = confirm('Are you sure you want to logout?');
+  //   if (confirmed) {
+  //     localStorage.clear(); // Clear local storage
+  //     alert('You have been logged out successfully!');
+  //     window.location.href = '/login'; // Redirect to the login page
+  //   }
+  // }
+  isAlertVisible = false; // To control visibility of the custom alert
   logout() {
-    // Confirm logout action
-    const confirmed = confirm('Are you sure you want to logout?');
-    if (confirmed) {
-      localStorage.clear(); // Clear local storage
-      alert('You have been logged out successfully!');
-      window.location.href = '/login'; // Redirect to the login page
-    }
+    this.isAlertVisible = true; // Show the custom alert
+  }
+  onLogoutConfirm() {
+    this.isAlertVisible = false;
+    localStorage.clear(); // Clear local storage
+    window.location.href = '/login'; // Redirect to the login page
+  }
+
+  onLogoutCancel() {
+    this.isAlertVisible = false; // Close the custom alert
   }
 
   
