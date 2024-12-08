@@ -114,15 +114,6 @@ export class AdminComponent {
   reports: any[] = []; // Stores the fetched report data
   isGettingReport: boolean = false;
 
-
-
-
-
-
-
-
-
-
     //Form data for Adding the users
     addUserData: any = {
       roleUserId: 'worker', // Default role user ID
@@ -183,9 +174,6 @@ export class AdminComponent {
       paymentStatus: 'Successful', // Default value
     };
     
-    
-    
-
   constructor(private http: HttpClient,private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -391,7 +379,7 @@ export class AdminComponent {
       error: (err) => {
         console.error('Error fetching user:', err);
         // alert('Failed to get user details. Please try again.');
-        this.showCustomMessage('ailed to get user details. Please try again.', 'error');
+        this.showCustomMessage('Failed to get user details. Please try again.', 'error');
       },
     });
   }
@@ -535,7 +523,7 @@ resetUpdateProjectForm() {
     this.http.get(apiUrl).subscribe({
       next: (response) => {
         this.project = response; // Store the project details
-        this.showCustomMessage('Fetched project successfully!', 'success');
+        this.showCustomMessage('Showing available project!', 'success');
         this.errorMessage = null; // Clear any previous error messages
       },
       error: (err) => {
@@ -738,7 +726,7 @@ resetUpdateProjectForm() {
       next: (response) => {
         this.expenses = response; // Store the fetched expenses
         console.log('Expenses fetched successfully:', this.expenses);
-        this.showCustomMessage('Expenses fetched successfully!', 'success');
+        this.showCustomMessage('Showing available expenses!', 'success');
       },
       error: (err) => {
         console.error('Error fetching expenses:', err);
@@ -817,7 +805,7 @@ resetUpdateProjectForm() {
       next: (response) => {
         this.reports = response; // Store the fetched reports
         console.log('Reports fetched successfully:', this.reports);
-        this.showCustomMessage('Reports fetched successfully!', 'success');
+        this.showCustomMessage('Showing available reports!', 'success');
       },
       error: (err) => {
         console.error('Error fetching reports:', err);

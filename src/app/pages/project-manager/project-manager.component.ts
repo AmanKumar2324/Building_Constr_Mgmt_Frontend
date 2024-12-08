@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component,ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CustomAlertComponent } from '../../shared/custom-alert/custom-alert.component';
+import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/custon-message-alert.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, RouterModule, FormsModule, CustomAlertComponent],
   templateUrl: './project-manager.component.html',
   styleUrls: ['./project-manager.component.css']
 })
@@ -51,9 +53,6 @@ export class ProjectManagerComponent {
 
   vendorsButtons = [
     { action: 'viewAllVendors', label: 'View Vendors' },
-    // { action: 'addVendor', label: 'Add Vendor' },
-    // { action: 'updateVendor', label: 'Modify Vendor' },
-    // { action: 'removeVendor', label: 'Remove Vendor' }
   ];
 
   expenseButtons = [
@@ -62,7 +61,6 @@ export class ProjectManagerComponent {
   ];
 
   reportsButtons = [
-    // { action: 'generateReport', label: 'Generate Report' },
     { action: 'viewReports', label: 'View Reports' }
   ];
   isLogoutModalOpen: boolean = false; // Tracks if the logout confirmation modal is open
@@ -203,7 +201,8 @@ export class ProjectManagerComponent {
     
     
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver) {}
 
   // Toggles the drawer and sets the current drawer content
   toggleDrawer(drawer: string) {
@@ -214,6 +213,18 @@ export class ProjectManagerComponent {
       this.drawerOpen = true;
       this.currentDrawer = drawer;
     }
+  }
+  showCustomMessage(message: string, type: 'success' | 'error' | 'info') {
+    // Clear existing alerts
+    this.viewContainerRef.clear();
+
+    // Dynamically create the alert component
+    const factory = this.componentFactoryResolver.resolveComponentFactory(CustomMessageAlertComponent);
+    const componentRef = this.viewContainerRef.createComponent(factory);
+
+    // Pass data to the alert component
+    componentRef.instance.message = message;
+    componentRef.instance.type = type;
   }
   
   //Getting all the users
@@ -231,12 +242,13 @@ export class ProjectManagerComponent {
     const apiUrl = 'https://localhost:7185/api/User'; // API endpoint
     this.http.post(apiUrl, this.addUserData).subscribe({
       next: (response) => {
-        alert('User added successfully!'); // Show success notification
+        // alert('User added successfully!'); // Show success notification
+        this.showCustomMessage('Vendor updated successfully!', 'success');
         this.resetAddUserForm(); // Reset the form
       },
       error: (err) => {
         console.error('Error adding user:', err);
-        alert('Failed to add user. Please try again.');
+        this.showCustomMessage('Failed to add user. Please try again!', 'error');
       },
     });
   }
@@ -275,12 +287,12 @@ export class ProjectManagerComponent {
       const apiUrl = `https://localhost:7185/api/User/${this.userIdToRemove}`; // API endpoint with user ID
       this.http.delete(apiUrl).subscribe({
         next: (response) => {
-          alert('User removed successfully!'); // Show success notification
+          this.showCustomMessage('User removed successfully!', 'success');
           this.resetRemoveUserForm(); // Reset the form
         },
         error: (err) => {
           console.error('Error removing user:', err);
-          alert('Failed to remove user. Please try again.');
+          this.showCustomMessage('Failed to remove user. Please try again!', 'error');
         },
       });
     }
@@ -301,7 +313,7 @@ export class ProjectManagerComponent {
       !this.updateUserData.email.trim() ||
       !this.updateUserData.phoneNumber.trim()
     ) {
-      alert('All fields are required, and User ID must be a valid number.');
+      this.showCustomMessage('All fields are required and UserId must be a number!', 'error');
       return;
     }
   
@@ -314,12 +326,12 @@ export class ProjectManagerComponent {
     // Send the PUT request
     this.http.put(apiUrl, this.updateUserData).subscribe({
       next: (response) => {
-        alert('User updated successfully!');
+        this.showCustomMessage('User updated successfully!', 'success');
         this.resetUpdateUserForm();
       },
       error: (err) => {
         console.error('Error updating user:', err);
-        alert('Failed to update user. Please check the input and try again.');
+        this.showCustomMessage('Failed to update user. Please check the input and try again!', 'error');
       },
     });
   }
@@ -355,7 +367,7 @@ export class ProjectManagerComponent {
   // Fetch user by ID from the API
   getUserById() {
     if (!this.userIdToGet) {
-      alert('User ID is required');
+      this.showCustomMessage('User ID is required', 'error');
       return;
     }
 
@@ -367,7 +379,7 @@ export class ProjectManagerComponent {
       },
       error: (err) => {
         console.error('Error fetching user:', err);
-        alert('Failed to get user details. Please try again.');
+        this.showCustomMessage('Failed to get the user details. Please try again!', 'error');
       },
     });
   }
@@ -395,7 +407,7 @@ export class ProjectManagerComponent {
     },
     error: (err) => {
       console.error('Error fetching projects:', err);
-      alert('Failed to fetch projects. Please try again.'); // Show error message
+      this.showCustomMessage('Failed to fetch projects. Please try again!', 'error');
     },
   });
 }
@@ -405,13 +417,13 @@ addProject() {
   const apiUrl = 'https://localhost:7185/api/Project'; // API endpoint for adding projects
   this.http.post(apiUrl, this.addProjectData).subscribe({
     next: (response) => {
-      alert('Project added successfully!'); // Show success message
+      this.showCustomMessage('Project added successfully!', 'success');
       this.resetAddProjectForm(); // Reset the form after submission
       this.fetchAllProjects(); // Refresh the project list
     },
     error: (err) => {
       console.error('Error adding project:', err); // Log error for debugging
-      alert('Failed to add project. Please try again.');
+      this.showCustomMessage('Failed to add project. Please try again!', 'error');
     },
   });
 }
@@ -434,20 +446,20 @@ showRemoveProjectForm() {
 }
 removeProject() {
   if (!this.projectIdToRemove || this.projectIdToRemove <= 0) {
-    alert('Please enter a valid Project ID.');
+    this.showCustomMessage('Please provide a valid Project ID', 'error');
     return;
   }
 
   const apiUrl = `https://localhost:7185/api/Project/${this.projectIdToRemove}`; // API endpoint with Project ID
   this.http.delete(apiUrl).subscribe({
     next: () => {
-      alert('Project removed successfully!');
+      this.showCustomMessage('Project removed successfully!', 'success');
       this.resetRemoveProjectForm();
       this.fetchAllProjects(); // Refresh the project list
     },
     error: (err) => {
       console.error('Error removing project:', err);
-      alert('Failed to remove project. Please try again.');
+      this.showCustomMessage('Failed to remove project. Please try again!', 'error');
     },
   });
 }
@@ -458,20 +470,20 @@ resetRemoveProjectForm() {
 
 updateProject() {
   if (!this.updateProjectData.projectId) {
-    alert('Please enter a valid Project ID.');
+    this.showCustomMessage('Enter a valid Project ID', 'error');
     return;
   }
 
   const apiUrl = `https://localhost:7185/api/Project/${this.updateProjectData.projectId}`; // API endpoint with Project ID
   this.http.put(apiUrl, this.updateProjectData).subscribe({
     next: () => {
-      alert('Project updated successfully!');
+      this.showCustomMessage('Project updated successfully!', 'success');
       this.resetUpdateProjectForm();
       this.fetchAllProjects(); // Refresh the project list
     },
     error: (err) => {
       console.error('Error updating project:', err);
-      alert('Failed to update project. Please try again.');
+      this.showCustomMessage('Failed to update project. Please try again!', 'error');
     },
   });
 }
@@ -542,7 +554,7 @@ resetUpdateProjectForm() {
       },
       error: (err) => {
         console.error('Error fetching vendors:', err);
-        alert('Failed to fetch vendors. Please try again.');
+        this.showCustomMessage('Failed to fetch vendors. Please try again!', 'error');
       },
     });
   }
@@ -557,13 +569,13 @@ resetUpdateProjectForm() {
     const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for adding a vendor
     this.http.post(apiUrl, this.addVendorData).subscribe({
       next: () => {
-        alert('Vendor added successfully!');
+        this.showCustomMessage('Vendor added successfully!', 'success');
         this.resetAddVendorForm(); // Reset the form after submission
         this.fetchAllVendors(); // Refresh the vendor list
       },
       error: (err) => {
         console.error('Error adding vendor:', err);
-        alert('Failed to add vendor. Please try again.');
+        this.showCustomMessage('Error adding vendor. Please try again!', 'error');
       },
     });
   }
@@ -675,7 +687,7 @@ resetUpdateProjectForm() {
   // Method to show confirmation message
   showConfirmationMessage(message: string) {
     // Using alert (basic method)
-    alert(message);
+    this.showCustomMessage(message, 'success');
   }
   
   
@@ -697,7 +709,7 @@ resetUpdateProjectForm() {
   fetchExpensesByProject() {
     // Check if the Project ID is valid before proceeding
     if (this.projectId === null || this.projectId === undefined || this.projectId <= 0) {
-      alert('Please enter a valid Project ID.');
+      this.showCustomMessage('Enter a valid Project ID', 'error');
       return;
     }
   
@@ -711,7 +723,7 @@ resetUpdateProjectForm() {
       },
       error: (err) => {
         console.error('Error fetching expenses:', err);
-        alert('Failed to fetch expenses. Please try again.');
+        this.showCustomMessage('Failed fetching expense. Please try again!', 'error');
       },
     });
   }
@@ -738,7 +750,7 @@ resetUpdateProjectForm() {
       !this.addExpenseData.date ||
       !this.addExpenseData.paymentStatus.trim()
     ) {
-      alert('All fields are required.');
+      this.showCustomMessage('All fields are required!', 'error');
       return;
     }
   
@@ -746,12 +758,12 @@ resetUpdateProjectForm() {
   
     this.http.post(apiUrl, this.addExpenseData).subscribe({
       next: (response) => {
-        alert('Expense added successfully!');
+        this.showCustomMessage('Expense added successfully!', 'success');
         this.resetAddExpenseForm();
       },
       error: (err) => {
         console.error('Error adding expense:', err);
-        alert('Failed to add expense. Please try again.');
+        this.showCustomMessage('Failed to add expense!', 'error');
       },
     });
   }
@@ -776,7 +788,7 @@ resetUpdateProjectForm() {
   // *****************************************Reports Section****************************************
   fetchReportByProjectId() {
     if (!this.projectId || this.projectId <= 0) {
-      alert('Please enter a valid Project ID.');
+      this.showCustomMessage('Use a valid Project ID!', 'error');
       return;
     }
   
@@ -789,7 +801,7 @@ resetUpdateProjectForm() {
       },
       error: (err) => {
         console.error('Error fetching reports:', err);
-        alert('Failed to fetch reports. Please try again.');
+        this.showCustomMessage('Failed to fetch reports. Try again!', 'error');
       },
     });
   }
@@ -906,18 +918,18 @@ resetUpdateProjectForm() {
         !this.assignTaskData.priority ||
         !this.assignTaskData.status
       ) {
-        alert('All fields are required.');
+        this.showCustomMessage('All fields are required', 'error');
         return;
       }
     
       this.http.post(apiUrl, this.assignTaskData).subscribe({
         next: (response) => {
-          alert('Task assigned successfully!');
+          this.showCustomMessage('Task assigned successfully!', 'success');
           this.resetAssignTaskForm(); // Reset the form after success
         },
         error: (err) => {
           console.error('Error assigning task:', err);
-          alert('Failed to assign task. Please try again.');
+          this.showCustomMessage('Failed to assign task!', 'error');
         },
       });
     }
@@ -945,7 +957,7 @@ resetUpdateProjectForm() {
       this.roleUserId = localStorage.getItem('roleUserId') || '';
       if (!this.roleUserId) {
         console.error('Role User ID is missing.');
-        alert('Role User ID is missing. Please log in again.');
+        this.showCustomMessage('Role user ID is missing. Login Again', 'error');
         // this.router.navigate(['/login']); // Redirect to login page
         return;
       }
@@ -962,7 +974,7 @@ resetUpdateProjectForm() {
         },
         error: (err) => {
           console.error('Error fetching assigned tasks:', err);
-          alert('Failed to fetch tasks. Please try again.');
+          this.showCustomMessage('Failed to fetch tasks!', 'error');
         }
       });
     }
@@ -978,12 +990,12 @@ resetUpdateProjectForm() {
     
       this.http.put(apiUrl, body, { headers: { 'Content-Type': 'application/json' } }).subscribe({
         next: (response) => {
-          alert('Task marked as completed successfully!');
+          this.showCustomMessage('Task completed successfully!', 'success');
           // Handle task completion logic here
         },
         error: (err) => {
           console.error('Error marking task as completed:', err);
-          alert('Error marking task as completed');
+          this.showCustomMessage('Error marking task as completed!', 'error');
         },
       });
     }
@@ -1171,15 +1183,27 @@ resetActionContainer() {
 
   //Logout
 
+  // logout() {
+  //   // Confirm logout action
+  //   const confirmed = confirm('Are you sure you want to logout?');
+  //   if (confirmed) {
+  //     localStorage.clear(); // Clear local storage
+  //     this.showCustomMessage('You have been logged out successfully!', 'success');
+  //     window.location.href = '/login'; // Redirect to the login page
+  //   }
+  // }
+  isAlertVisible = false; // To control visibility of the custom alert
   logout() {
-    // Confirm logout action
-    const confirmed = confirm('Are you sure you want to logout?');
-    if (confirmed) {
-      localStorage.clear(); // Clear local storage
-      alert('You have been logged out successfully!');
-      window.location.href = '/login'; // Redirect to the login page
-    }
+    this.isAlertVisible = true; // Show the custom alert
   }
-  
+  onLogoutConfirm() {
+    this.isAlertVisible = false;
+    localStorage.clear(); // Clear local storage
+    window.location.href = '/login'; // Redirect to the login page
+  }
+
+  onLogoutCancel() {
+    this.isAlertVisible = false; // Close the custom alert
+  }
 
 }
