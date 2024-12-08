@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ViewContainerRef,ComponentFactoryResolver  } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import Chart from 'chart.js/auto';
 import { CustomAlertComponent } from "../../shared/custom-alert/custom-alert.component";
 import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/custon-message-alert.component';
 
@@ -14,6 +15,8 @@ import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/c
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
+  @ViewChild('pieChart') pieChartRef!: ElementRef<HTMLCanvasElement>;
+  chart!: Chart; // Chart.js instance
 
   colors: string[] = [
     'rgb(205, 193, 255)',
@@ -59,7 +62,8 @@ export class AdminComponent {
 
   reportsButtons = [
     // { action: 'generateReport', label: 'Generate Report' },
-    { action: 'viewReports', label: 'View Reports' }
+    { action: 'viewOverallReports', label: 'View Overall Reports' },
+    { action: 'viewReports', label: 'View Project Reports' }
   ];
   isLogoutModalOpen: boolean = false; // Tracks if the logout confirmation modal is open
 
@@ -113,6 +117,7 @@ export class AdminComponent {
   //Reports
   reports: any[] = []; // Stores the fetched report data
   isGettingReport: boolean = false;
+  isGettingOverallReport: boolean = false;
 
     //Form data for Adding the users
     addUserData: any = {
@@ -213,6 +218,7 @@ export class AdminComponent {
   
     // Reset Reports Section Variables
     this.isGettingReport = false;
+    this.isGettingOverallReport = false;
   
     // Reset Miscellaneous Variables
     this.currentAction = null;
@@ -823,7 +829,62 @@ resetUpdateProjectForm() {
   showGetReportForm() {
     this.isGettingReport = true;
   }
+  showGetOverallReportForm() {
+    this.isGettingOverallReport = true;
+  }
   
+  // Fetch project statuses and render the chart
+  fetchProjectStatuses() {
+    const apiUrl = 'https://localhost:7185/api/Project/statuses';
+    this.http.get<any[]>(apiUrl).subscribe({
+      next: (projects) => {
+        const statusCounts = this.getStatusCounts(projects);
+        this.renderPieChart(statusCounts);
+      },
+      error: (err) => {
+        console.error('Error fetching project statuses:', err);
+        alert('Failed to load project statuses. Please try again.');
+      }
+    });
+  }
+    // Helper function to calculate counts for each status
+    getStatusCounts(projects: any[]): { [status: string]: number } {
+      return projects.reduce((acc, project) => {
+        acc[project.status] = (acc[project.status] || 0) + 1;
+        return acc;
+      }, {});
+    }
+  
+    // Render the Pie Chart
+    renderPieChart(statusCounts: { [status: string]: number }) {
+      if (this.chart) {
+        this.chart.destroy(); // Destroy the old chart instance
+      }
+  
+      const labels = Object.keys(statusCounts);
+      const data = Object.values(statusCounts);
+  
+      this.chart = new Chart(this.pieChartRef.nativeElement, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              data,
+              backgroundColor: ['rgb(205, 193, 255)', 'rgb(208, 232, 197)', 'rgb(137, 168, 178)'], // Colors for statuses
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+    }
   
 
 /********************************************Handling all the actions****************************************************************** */
@@ -903,6 +964,9 @@ resetUpdateProjectForm() {
     }
     else if (action === 'logout') {
       this.logout(); // Call the logout method
+    }else  if (action === 'viewOverallReports') {
+      this.showGetOverallReportForm();
+      // this.fetchProjectStatuses(); // Fetch data and render the chart
     }
     
   }

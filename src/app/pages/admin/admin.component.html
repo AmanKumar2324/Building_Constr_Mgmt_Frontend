@@ -896,6 +896,22 @@
 ></app-custom-alert>
 
 <ng-container #alertContainer></ng-container>
+
+<div *ngIf="isGettingOverallReport" class="project-overview-container">
+  <h2>Project Overview Report</h2>
+  <div class="chart-container">
+    <canvas #pieChart></canvas> <!-- Reference the canvas element for Chart.js -->
+  </div>
+  <button class="view-report-button" (click)="fetchProjectStatuses()">
+    Refresh Report
+  </button>
+</div>
+
+<!-- <li (click)="handleAction('viewEntireReports')">
+  <i class="material-icons">pie_chart</i>
+  <span>View Reports</span>
+</li> -->
+
   
   
   
