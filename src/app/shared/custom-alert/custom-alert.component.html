@@ -1,7 +1,11 @@
-<div *ngIf="message" class="custom-alert" [ngClass]="alertType">
-    <div class="alert-content">
-      <span class="alert-message">{{ message }}</span>
-      <button class="close-btn" (click)="closeAlert()">×</button>
+<!-- custom-alert.component.html -->
+<div class="custom-alert-backdrop">
+  <div class="custom-alert-box">
+    <h3>{{ title }}</h3>
+    <p>{{ message }}</p>
+    <div class="custom-alert-actions">
+      <button (click)="onConfirm()">OK</button>
+      <button *ngIf="showCancel" (click)="onCancel()">Cancel</button>
     </div>
   </div>
-  
+</div>

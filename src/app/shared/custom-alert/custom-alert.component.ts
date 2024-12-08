@@ -1,5 +1,6 @@
+// custom-alert.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-alert',
@@ -8,21 +9,18 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [CommonModule]
 })
-export class CustomAlertComponent implements OnInit {
-  message: string = '';
-  alertType: string = ''; // Can be success, error, or warning
+export class CustomAlertComponent {
+  @Input() title: string = 'Alert';
+  @Input() message: string = '';
+  @Input() showCancel: boolean = false; // For confirm dialogs
+  @Output() confirm = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  onConfirm() {
+    this.confirm.emit();
   }
 
-  showAlert(message: string, type: string = 'error') {
-    this.message = message;
-    this.alertType = type;
-  }
-
-  closeAlert() {
-    this.message = ''; // Hide the alert when close button is clicked
+  onCancel() {
+    this.cancel.emit();
   }
 }
