@@ -1,5 +1,5 @@
 /* Admin Container */
-.admin-container {
+.project-manager-container {
     display: flex;
     /* height: 100vh; */
     overflow: hidden;
@@ -191,11 +191,11 @@
 .add-user-form input[type="password"],
 .add-user-form input[type="email"],
 .add-user-form input[type="checkbox"] {
-  padding: 0.8rem;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
@@ -254,25 +254,32 @@
 
 /* Form Inputs */
 .remove-user-form input[type="text"] {
-  padding: 0.8rem;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 /* Submit Button */
 .remove-user-form button {
-  padding: 0.8rem;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
-  background-color: #ff4d4f; /* Red for delete action */
+  background-color: var(--primary-button-color);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .remove-user-form button:hover {
@@ -308,29 +315,36 @@
 .update-user-form input[type="password"],
 .update-user-form input[type="email"],
 .update-user-form input[type="checkbox"] {
-  padding: 0.8rem;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 /* Submit Button */
 .update-user-form button {
-  padding: 0.8rem;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
-  background-color: #4caf50; /* Green for update action */
+  background-color: var(--primary-button-color);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .update-user-form button:hover {
-  background-color: #45a049; /* Darker green for hover */
+  background-color: #774fd3;
 }
 
 /* Get User Form Styling */
@@ -356,28 +370,35 @@
 }
 
 .get-user-form input {
-  padding: 0.8rem;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .get-user-form button {
-  padding: 0.8rem;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
-  background-color: #4caf50;
+  background-color: var(--primary-button-color);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .get-user-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 /* User Details Table */
@@ -456,23 +477,31 @@
 
 .add-project-form input,
 .add-project-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .add-project-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #9068fd;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .add-project-form button:hover {
@@ -501,23 +530,32 @@
 }
 
 .remove-project-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .remove-project-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #ff4d4d;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+
 }
 
 .remove-project-form button:hover {
@@ -548,23 +586,32 @@
 
 .update-project-form input,
 .update-project-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .update-project-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #9068fd;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+
 }
 
 .update-project-form button:hover {
@@ -594,23 +641,31 @@
 }
 
 .get-project-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .get-project-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #9068fd;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;;
 }
 
 .get-project-form button:hover {
@@ -701,27 +756,35 @@
 }
 
 .add-vendor-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .add-vendor-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .add-vendor-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 
@@ -748,27 +811,35 @@
 
 .update-vendor-status-form input,
 .update-vendor-status-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .update-vendor-status-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .update-vendor-status-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 /* Success/Error Message Styling */
@@ -800,23 +871,31 @@
 }
 
 .remove-vendor-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .remove-vendor-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #f44336;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .remove-vendor-form button:hover {
@@ -855,27 +934,35 @@
 }
 
 .expense-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .expense-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .expense-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 /* Table Styling */
@@ -945,27 +1032,35 @@
 
 .add-expense-form input,
 .add-expense-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .add-expense-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .add-expense-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 
@@ -994,27 +1089,35 @@
 }
 
 .report-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .report-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .report-form button:hover {
-  background-color: #45a049;
+  background-color: #774fd3;
 }
 
 /* Table Styling */
@@ -1065,19 +1168,22 @@
 }
 
 .logout-button {
-  display: flex;
-  align-items: center;
+  position: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.8rem;
+  height: 50px;
   width: 100%;
-  background-color: #ff4c4c;
+  align-items: center;
+  padding: 0.2rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--primary-button-color);
   color: white;
-  font-size: 14px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .logout-button:hover {
@@ -1181,10 +1287,11 @@
 }
 
 .task-form input {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
@@ -1275,10 +1382,11 @@
 }
 
 .priority-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
@@ -1431,23 +1539,31 @@
 
 .task-form input,
 .task-form select {
-  padding: 0.8rem;
-  font-size: 14px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
   margin-top: 0.5rem;
 }
 
 .task-form button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
-  color: white;
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
   font-size: 16px;
   font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
 }
 
 .task-form button:hover {
