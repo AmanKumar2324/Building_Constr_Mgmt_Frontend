@@ -1,107 +1,117 @@
-/* Full Page Background with the provided image */
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('/assets/login-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  /* Centered Form Styling */
-  .form-container {
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  /* Form Heading */
-  h2 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: var(--primary-text-color, #171717); /* Default to #171717 if the variable is not defined */
-  }
-  
-  /* Role Selection Styling */
-  .role-selection {
-    margin-bottom: 1.5rem;
-    text-align: left;
-  }
-  
-  .role-selection label {
-    font-weight: bold;
-    color: var(--primary-text-color, #171717);
-  }
-  
-  select {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 0.5rem;
-    border: 1px solid var(--secondary-text-color, #6c6b6c);
-    border-radius: 5px;
-    font-size: 0.9rem;
-    color: var(--primary-text-color, #171717);
-    background-color: white;
-  }
-  
-  select:focus {
-    border-color: var(--primary-button-color, #9068fd);
-    outline: none;
-  }
-  
-  /* Input Fields */
-  .form-group {
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-  
-  label {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--primary-text-color, #171717);
-  }
-  
-  input[type='text'],
-  input[type='password'] {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 0.5rem;
-    border: 1px solid var(--secondary-text-color, #6c6b6c);
-    border-radius: 5px;
-    font-size: 0.9rem;
-    color: var(--primary-text-color, #171717);
-  }
-  
-  input::placeholder {
-    color: var(--secondary-text-color, #6c6b6c);
-  }
-  
-  /* Login Button */
-  .login-button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: var(--primary-button-color, #9068fd);
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background-color: #774fd3; /* Slightly darker shade for hover */
-  }
-  
-  .login-button:disabled {
-    background-color: var(--secondary-text-color, #6c6b6c);
-    cursor: not-allowed;
-  }
-  
+/* Container holding both halves */
+.container {
+  display: flex;
+  /* height: 100vh; */
+}
+
+/* Left side styling */
+.left-side {
+  flex: 1;
+  height: 93vh;
+  background-color: #f4f4f4; /* Light gray background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.left-side h1 {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.left-side .logo-image {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.left-side .contact-info {
+  font-size: 1rem;
+  color: #555;
+}
+
+.left-side .contact-info h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.left-side .contact-info p {
+  margin: 5px 0;
+}
+
+/* Right side styling (form container) */
+.right-side {
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.form-container {
+  /* height: 65%; */
+  width: 100%;
+  width: 400px; /* Form will have a max width */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: var(--primary-button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.login-button:hover {
+  background-color: #774fd3;
+}

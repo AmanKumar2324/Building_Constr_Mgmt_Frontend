@@ -1,20 +1,20 @@
-<div class="login-container">
+<div class="container">
+  <!-- Left Side: Website name, Image, and Contact Info -->
+  <div class="left-side">
+    <h1>ERECTA</h1>
+    <img src="assets/lg-bg.gif" alt="Logo" class="logo-image" />
+    <div class="contact-info">
+      <h3>Contact Support</h3>
+      <p>Email: support&#64;erecta.com</p>
+      <p>Phone: +1234567890</p>
+    </div>
+  </div>
+
+  <!-- Right Side: Login Form -->
+  <div class="right-side">
     <div class="form-container">
       <h2>Login</h2>
       <form (ngSubmit)="onLogin()">
-        <!-- Role Selection as a Dropdown -->
-        <!-- <div class="form-group role-selection">
-          <label for="role">Select Role:</label>
-          <select id="role" [(ngModel)]="role" name="role" required>
-            <option value="Admin">Admin</option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Engineer">Engineer</option>
-            <option value="Architect">Architect</option>
-            <option value="Supervisor">Site Supervisor</option>
-            <option value="Worker">Worker</option>
-          </select>
-        </div> -->
-  
         <!-- Role User Identity -->
         <div class="form-group">
           <label for="roleUserId">Role User ID</label>
@@ -27,7 +27,7 @@
             name="roleUserId"
           />
         </div>
-  
+
         <!-- Password -->
         <div class="form-group">
           <label for="password">Password</label>
@@ -40,10 +40,10 @@
             name="password"
           />
         </div>
-  
+
         <!-- Error Message -->
         <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-  
+
         <!-- Login Button -->
         <button
           type="submit"
@@ -55,4 +55,4 @@
       </form>
     </div>
   </div>
-  
+</div>
