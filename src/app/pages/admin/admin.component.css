@@ -253,7 +253,41 @@
   display: block;
   margin: 0 auto;
 }
+/* Filter User table  */
+.filters {
+  margin-bottom: 20px;
+  display: flex; /* Aligns the children (select elements and button) in a row */
+  align-items: center; /* Vertically centers the items */
+  gap: 10px;
+}
 
+.filters label {
+  margin-right: 10px;
+}
+
+.filters select {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.filters button {
+  height: 35px;
+  padding: 0.2rem;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-top: 0px;
+}
+
+.filters button:hover {
+  background-color: #774fd3;
+}
 .download-button {
   position: center;
   justify-content: center;

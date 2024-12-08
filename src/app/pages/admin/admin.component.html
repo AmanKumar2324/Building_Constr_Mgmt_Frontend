@@ -97,6 +97,31 @@
       <!-- Table for All Users -->
       <div *ngIf="isShowingUsers">
         <h2>All Users</h2>
+      
+        <!-- Filters Section -->
+        <div class="filters">
+          <label for="role">Role:</label>
+          <select id="role" [(ngModel)]="selectedRole">
+            <option value="">All</option>
+            <option value="Admin">Admin</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Worker">Worker</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Supplier">Supplier</option>
+            <option value="Site Supervisor">Site Supervisor</option>
+          </select>
+      
+          <label for="availability">Availability:</label>
+          <select id="availability" [(ngModel)]="selectedAvailability">
+            <option value="">Select Availability</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+      
+          <button (click)="applyFilters()">Apply Filters</button>
+        </div>
+      
+        <!-- User Table -->
         <table class="user-table">
           <thead>
             <tr>
@@ -110,7 +135,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of users">
+            <tr *ngFor="let user of filteredUsers">
               <td>{{ user.userId }}</td>
               <td>{{ user.roleUserId }}</td>
               <td>{{ user.username }}</td>
@@ -121,8 +146,10 @@
             </tr>
           </tbody>
         </table>
+      
         <button class="download-button" (click)="downloadUserListAsPDF()">Download as PDF</button>
       </div>
+      
       <!-- Add User Form -->
     <div *ngIf="isAddingUser">
       <h2>Add User</h2>

@@ -4,10 +4,10 @@ import { Component, ComponentFactoryResolver, ElementRef, ViewChild, ViewContain
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import Chart from 'chart.js/auto';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { CustomAlertComponent } from "../../shared/custom-alert/custom-alert.component";
 import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/custon-message-alert.component';
-import autoTable from 'jspdf-autotable';
-import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-admin',
@@ -83,7 +83,10 @@ export class AdminComponent {
   updateUserId: number = 0; // Tracks the user ID being updated
   userIdToGet: string = ''; // Stores the user ID to get user data
   user: any = null; // Stores the user details from the API
-
+// fliter user data
+filteredUsers: any[] = []; // Filtered list of users based on filters
+selectedRole: string = ''; // Selected role filter
+selectedAvailability: string = 'true'; // Selected availability filter
   // Tracks if the user info form is shown
   isGettingUser: boolean = false;
   currentAction: string | null = null; // Stores the current action ('addUser', 'viewUserById', etc.)
@@ -271,6 +274,8 @@ export class AdminComponent {
       this.http.get<any[]>(apiUrl).subscribe({
         next: (response) => {
           this.users = response; // Store the user data
+          this.filteredUsers = response; // Initially, show all users without any filter
+          this.isShowingUsers = true; // Show the users table
           this.showCustomMessage('User List Fetched Successfully!','success');
         },
         error: (err) => {
@@ -279,6 +284,29 @@ export class AdminComponent {
         },
       });
     }
+    // Apply the selected filters and update the user list
+    applyFilters() {
+      let filteredData = this.users; // Start with all users
+  
+      // Apply role filter
+      if (this.selectedRole) {
+        filteredData = filteredData.filter(user => user.role === this.selectedRole);
+      }
+  
+      // Apply availability filter
+      if (this.selectedAvailability !== '') {
+        const isActive = this.selectedAvailability === 'true';
+        filteredData = filteredData.filter(user => user.isActive === isActive);
+      }
+  
+      this.filteredUsers = filteredData; // Update filtered users
+    }
+  
+    // Method to handle the button click for "View All Users"
+    onViewAllUsersClick() {
+      this.fetchUsers(); // Fetch all users when the button is clicked
+    }
+
 
     //show the remove user form
     showRemoveUserForm() {
@@ -1018,13 +1046,13 @@ resetUpdateProjectForm() {
   // Method to generate and download the PDF
   downloadUserListAsPDF() {
     const doc = new jsPDF(); // Create a new PDF document
-
+  
     // Add a title
     doc.setFontSize(18);
     doc.text('User List', 14, 20);
-
-    // Prepare the table data
-    const tableData = this.users.map((user) => [
+  
+    // Prepare the table data based on whether the filter is applied or not
+    const tableData = (this.isShowingUsers ? this.filteredUsers : this.users).map((user) => [
       user.userId,
       user.roleUserId,
       user.username,
@@ -1033,7 +1061,7 @@ resetUpdateProjectForm() {
       user.phoneNumber,
       user.isActive ? 'Active' : 'Inactive',
     ]);
-
+  
     // Add the table using autoTable
     autoTable(doc, {
       head: [['User ID', 'Role User ID', 'Username', 'Role', 'Email', 'Phone Number', 'Status']],
@@ -1041,9 +1069,10 @@ resetUpdateProjectForm() {
       startY: 30, // Position below the title
       theme: 'striped',
     });
-
+  
     // Save the PDF
     doc.save('user-list.pdf');
   }
+  
 
 }
