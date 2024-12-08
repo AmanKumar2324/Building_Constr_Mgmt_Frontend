@@ -826,7 +826,7 @@ markTaskAsCompleted(taskId: number, projectId: number) {
     },
     error: (err) => {
       console.error('Error marking task as completed:', err);
-      alert('Marked task as completed.');
+      alert('Error Marking the task as completed.');
     },
   });
 }
