@@ -178,7 +178,20 @@
 }
 
 /* Form Labels */
-.add-user-form label {
+.add-user-form label,
+.update-user-form label,
+.get-user-form label,
+.add-project-form label,
+.remove-project-form label,
+.update-project-form label,
+.get-project-form label,
+.add-vendor-form label,
+.update-vendor-status-form label,
+.remove-vendor-form label,
+.expense-form label,
+.add-expense-form label,
+.report-form label
+{
   display: flex;
   flex-direction: column; /* Stack label and input vertically */
   font-size: 14px;
@@ -209,7 +222,20 @@
 }
 
 /* Submit Button */
-.add-user-form button {
+.add-user-form button,
+.remove-user-form button,
+.update-user-form button,
+.get-user-form button,
+.add-project-form button,
+.remove-project-form button,
+.update-project-form button,
+.get-project-form button,
+.add-vendor-form button,
+.update-vendor-status-form button,
+.remove-vendor-form button,
+.expense-form button,
+.add-expense-form button,
+.report-form button {
   position: center;
   justify-content: center;
   height: 50px;
@@ -266,25 +292,6 @@
 }
 
 /* Submit Button */
-.remove-user-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-
-}
 
 .remove-user-form button:hover {
   background-color: #d9363e; /* Darker red for hover */
@@ -305,15 +312,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Form Labels */
-.update-user-form label {
-  display: flex;
-  flex-direction: column; /* Stack label and input vertically */
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-}
-
 /* Form Inputs */
 .update-user-form input[type="text"],
 .update-user-form input[type="password"],
@@ -327,24 +325,6 @@
 }
 
 /* Submit Button */
-.update-user-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-}
 
 .update-user-form button:hover {
 
@@ -365,14 +345,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.get-user-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-}
-
 .get-user-form input {
   width: 100%;
   padding: 10px;
@@ -381,25 +353,6 @@
   box-sizing: border-box;
 }
 
-.get-user-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-
-}
 
 .get-user-form button:hover {
 
@@ -473,13 +426,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-project-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .add-project-form input,
 .add-project-form select {
   width: 100%;
@@ -488,26 +434,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.add-project-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-
 }
 
 .add-project-form button:hover {
@@ -528,13 +454,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.remove-project-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .remove-project-form input {
   width: 100%;
   padding: 10px;
@@ -542,25 +461,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.remove-project-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .remove-project-form button:hover {
@@ -582,12 +482,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.update-project-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
 
 .update-project-form input,
 .update-project-form select {
@@ -597,25 +491,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.update-project-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .update-project-form button:hover {
@@ -637,13 +512,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.get-project-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .get-project-form input {
   width: 100%;
   padding: 10px;
@@ -651,26 +519,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.get-project-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-
 }
 
 .get-project-form button:hover {
@@ -753,13 +601,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-vendor-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .add-vendor-form input {
   width: 100%;
   padding: 10px;
@@ -767,26 +608,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.add-vendor-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-
 }
 
 .add-vendor-form button:hover {
@@ -808,12 +629,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.update-vendor-status-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
 
 .update-vendor-status-form input,
 .update-vendor-status-form select {
@@ -825,24 +640,6 @@
   margin-top: 0.5rem;
 }
 
-.update-vendor-status-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
-}
 
 .update-vendor-status-form button:hover {
   background-color: #774fd3;
@@ -869,13 +666,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.remove-vendor-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .remove-vendor-form input {
   width: 100%;
   padding: 10px;
@@ -883,25 +673,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.remove-vendor-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .remove-vendor-form button:hover {
@@ -932,13 +703,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.expense-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .expense-form input {
   width: 100%;
   padding: 10px;
@@ -946,25 +710,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.expense-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .expense-form button:hover {
@@ -1029,13 +774,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-expense-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .add-expense-form input,
 .add-expense-form select {
   width: 100%;
@@ -1044,25 +782,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.add-expense-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .add-expense-form button:hover {
@@ -1087,13 +806,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.report-form label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
 .report-form input {
   width: 100%;
   padding: 10px;
@@ -1101,25 +813,6 @@
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 0.5rem;
-}
-
-.report-form button {
-  position: center;
-  justify-content: center;
-  height: 50px;
-  width: 100%;
-  align-items: center;
-  padding: 0.2rem;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--primary-button-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 0 auto;
 }
 
 .report-form button:hover {

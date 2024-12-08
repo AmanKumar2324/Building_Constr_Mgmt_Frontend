@@ -31,34 +31,23 @@ export class EngineerComponent {
   ];
   notificationsButtons = [
     { action: 'getUpdates', label: 'Get Recent Updates' },
-    // { action: 'viewAllProjects', label: 'View All Projects' },
-    // { action: 'viewProjectById', label: 'View Project By Id' },
-    // { action: 'removeProject', label: 'Remove Project' },
-    // { action: 'updateProject', label: 'Update Project' }
   ]
   projectsButtons = [
     { action: 'addProject', label: 'Add Project' },
-    // { action: 'viewAllProjects', label: 'View All Projects' },
-    // { action: 'viewProjectById', label: 'View Project By Id' },
-    // { action: 'removeProject', label: 'Remove Project' },
-    // { action: 'updateProject', label: 'Update Project' }
   ];
 
   vendorsButtons = [
     { action: 'viewAllVendors', label: 'View Vendors' },
     { action: 'addVendor', label: 'Add Vendor' },
     { action: 'updateVendor', label: 'Modify Vendor' },
-    // { action: 'removeVendor', label: 'Remove Vendor' }
   ];
 
   expenseButtons = [
     { action: 'addExpense', label: 'Add Expense' },
-    // { action: 'viewExpence', label: 'View Expense' }
   ];
 
   reportsButtons = [
     { action: 'generateReport', label: 'Generate Report' },
-    // { action: 'viewReports', label: 'View Reports' }
   ];
   isLogoutModalOpen: boolean = false; // Tracks if the logout confirmation modal is open
 
@@ -113,28 +102,6 @@ export class EngineerComponent {
   roleUserId: string = '';
   isShowingNotification: boolean = false;
 
-    //Form data for Adding the users
-    addUserData: any = {
-      roleUserId: 'worker', // Default role user ID
-      username: '',
-      passwordHash: '',
-      role: '',
-      email: '',
-      phoneNumber: '',
-      isActive: true,
-    };
-
-    //form data to update the user
-    updateUserData: any = {
-      userId: 0,
-      roleUserId: '',
-      username: '',
-      passwordHash: '',
-      role: '',
-      email: '',
-      phoneNumber: '',
-      isActive: true,
-    };
 
     addProjectData: any = {
       name: '',
@@ -208,43 +175,6 @@ export class EngineerComponent {
     this.notifications = [];
   }
   
-  
-  //Getting all the users
-  showAllUsers() {
-    this.isShowingUsers = true; // Show the "All Users" table
-    this.fetchUsers(); // Fetch users from API
-  }
-    // Show the "Add User" form
-    showAddUserForm() {
-      this.isAddingUser = true; // Show the form
-      this.isShowingUsers = false; // Hide the users table
-    }
-    // Add user API call
-  addUser() {
-    const apiUrl = 'https://localhost:7185/api/User'; // API endpoint
-    this.http.post(apiUrl, this.addUserData).subscribe({
-      next: (response) => {
-        alert('User added successfully!'); // Show success notification
-        this.resetAddUserForm(); // Reset the form
-      },
-      error: (err) => {
-        console.error('Error adding user:', err);
-        alert('Failed to add user. Please try again.');
-      },
-    });
-  }
-  resetAddUserForm() {
-    this.addUserData = {
-      roleUserId: 'worker',
-      username: '',
-      passwordHash: '',
-      role: '',
-      email: '',
-      phoneNumber: '',
-      isActive: true,
-    };
-    this.isAddingUser = false; // Hide the form after submission
-  }
 
 
     // Fetch users from the API
@@ -264,81 +194,7 @@ export class EngineerComponent {
     showRemoveUserForm() {
       this.isRemovingUser = true; // Show the form
     }
-    removeUser() {
-      const apiUrl = `https://localhost:7185/api/User/${this.userIdToRemove}`; // API endpoint with user ID
-      this.http.delete(apiUrl).subscribe({
-        next: (response) => {
-          alert('User removed successfully!'); // Show success notification
-          this.resetRemoveUserForm(); // Reset the form
-        },
-        error: (err) => {
-          console.error('Error removing user:', err);
-          alert('Failed to remove user. Please try again.');
-        },
-      });
-    }
-     // Reset the "Remove User" form
-  resetRemoveUserForm() {
-    this.userIdToRemove = ''; // Clear the user ID field
-    this.isRemovingUser = false; // Hide the form
-  }
-  // Update user API call
-  updateUser() {
-    // Validate input fields
-    if (
-      !this.updateUserId || this.updateUserId <= 0 ||
-      !this.updateUserData.roleUserId.trim() ||
-      !this.updateUserData.username.trim() ||
-      !this.updateUserData.passwordHash.trim() ||
-      !this.updateUserData.role.trim() ||
-      !this.updateUserData.email.trim() ||
-      !this.updateUserData.phoneNumber.trim()
-    ) {
-      alert('All fields are required, and User ID must be a valid number.');
-      return;
-    }
-  
-    // Assign the User ID to updateUserData
-    this.updateUserData.userId = this.updateUserId;
-  
-    // Prepare API URL
-    const apiUrl = `https://localhost:7185/api/User/${this.updateUserId}`;
-    
-    // Send the PUT request
-    this.http.put(apiUrl, this.updateUserData).subscribe({
-      next: (response) => {
-        alert('User updated successfully!');
-        this.resetUpdateUserForm();
-      },
-      error: (err) => {
-        console.error('Error updating user:', err);
-        alert('Failed to update user. Please check the input and try again.');
-      },
-    });
-  }
-  
-  
-  
-  
-    // Show the "Update User" form
-    showUpdateUserForm() {
-      this.isUpdatingUser = true; // Show the form
-    }
-    // Reset the "Update User" form
-    resetUpdateUserForm() {
-      this.updateUserId = 0;
-      this.updateUserData = {
-        userId: 0, // Reset to 0
-        roleUserId: '',
-        username: '',
-        passwordHash: '',
-        role: '',
-        email: '',
-        phoneNumber: '',
-        isActive: true,
-      };
-      this.isUpdatingUser = false; // Hide the form
-    }
+
     
     /****************************************Getting User By Id******************************************************* */
     // Show the "Get User by ID" form
@@ -920,24 +776,7 @@ resetActionContainer() {
     this.resetActionContainer();
     this.isDrawerActionSelected = true;
 
-    if (action === 'viewAllUsers') {
-      this.showAllUsers(); // Trigger the "View All Users" action
-    }
-    else if (action === 'addUser') {
-      this.isAddingUser = true;
-      this.showAddUserForm();
-    }
-    else if (action === 'removeUser') {
-      this.showRemoveUserForm();
-    }
-    else if (action === 'updateUser') {
-      this.showUpdateUserForm();
-    }
-    else if(action === 'viewUserById' )
-    {
-      this.showGetUserForm();
-    }
-    else if (action === 'viewAllProjects') {
+    if (action === 'viewAllProjects') {
       this.showAllProjects(); // Fetch all projects when this action is triggered
     }
     else if (action === 'addProject') {
