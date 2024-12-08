@@ -1,0 +1,7 @@
+<div *ngIf="message" class="custom-alert" [ngClass]="alertType">
+    <div class="alert-content">
+      <span class="alert-message">{{ message }}</span>
+      <button class="close-btn" (click)="closeAlert()">×</button>
+    </div>
+  </div>
+  
