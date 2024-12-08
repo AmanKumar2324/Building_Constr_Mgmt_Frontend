@@ -838,12 +838,71 @@ showNotificationForm(){
   this.fetchAssignedTasks();
 }
 
+resetActionContainer() {
+  // console.log('Resetting action container...');
+
+  // Reset Drawer States
+  // this.isDrawerActionSelected = false;
+  // this.drawerOpen = false;
+  // this.currentDrawer = null;
+
+  // Reset User States
+  this.isShowingUsers = false;
+  this.isAddingUser = false;
+  this.isRemovingUser = false;
+  this.isUpdatingUser = false;
+  this.userIdToRemove = '';
+  this.updateUserId = 0;
+  this.userIdToGet = '';
+  this.user = null;
+  this.isGettingUser = false;
+
+  // Reset Project States
+  this.isShowingProjects = false;
+  this.isRemovingProject = false;
+  this.isUpdatingProject = false;
+  this.projectIdToRemove = null;
+  this.projectIdToGet = null;
+  this.project = null;
+  this.isGettingProject = false;
+
+  // Reset Vendor States
+  this.isShowingVendors = false;
+  this.isAddingVendor = false;
+  this.isUpdatingVendor = false;
+  this.isRemovingVendor = false;
+
+  // Reset Expense States
+  this.isShowingExpensess = false;
+  this.isAddingExpense = false;
+  this.projectId = null;
+  this.expenses = [];
+
+  // Reset Report States
+  this.isGettingReport = false;
+  this.reports = [];
+
+  // Reset Notification States
+  // this.isShowingNotification = false;
+  // this.notifications = [];
+  // this.roleUserId = '';
+
+  // Reset Error and Action States
+  this.errorMessage = null;
+  this.currentAction = null;
+
+  // console.log('Action container reset completed.');
+}
+
+
 /********************************************Handling all the actions****************************************************************** */
   // Handle specific actions from the drawer
   handleAction(action: string) {
     console.log(`Action triggered: ${action}`);
-    this.isDrawerActionSelected = true;
     // Add your logic here for the respective actions
+    this.resetActionContainer();
+    this.isDrawerActionSelected = true;
+
     if (action === 'viewAllUsers') {
       this.showAllUsers(); // Trigger the "View All Users" action
     }

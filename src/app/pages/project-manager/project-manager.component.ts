@@ -996,38 +996,102 @@ resetUpdateProjectForm() {
     }
 /********************************************Handling all the actions****************************************************************** */
 
+// resetActionContainer() {
+//   this.currentAction = ''; // Reset the action to no content
+//   this.isDrawerActionSelected = false; // Reset the flag for showing drawer action content
+// }
 resetActionContainer() {
-  this.currentAction = ''; // Reset the action to no content
-  this.isDrawerActionSelected = false; // Reset the flag for showing drawer action content
+  // General resets
+  this.isDrawerActionSelected = false;
+  this.currentAction = null;
+  this.errorMessage = null;
+
+  // User-related resets
+  this.isShowingUsers = false;
+  this.isAddingUser = false;
+  this.isRemovingUser = false;
+  this.userIdToRemove = '';
+  this.isUpdatingUser = false;
+  this.updateUserId = 0;
+  this.isGettingUser = false;
+  this.userIdToGet = '';
+  this.user = null;
+
+  // Project-related resets
+  this.isShowingProjects = false;
+  this.projectIdToRemove = null;
+  this.isRemovingProject = false;
+  this.isUpdatingProject = false;
+  this.projectIdToGet = null;
+  this.project = null;
+  this.isGettingProject = false;
+
+  // Vendor-related resets
+  this.isShowingVendors = false;
+  this.isAddingVendor = false;
+  this.isUpdatingVendor = false;
+  this.isRemovingVendor = false;
+
+  // Expense-related resets
+  this.projectId = null;
+  this.isShowingExpensess = false;
+  this.isAddingExpense = false;
+
+  // Report-related resets
+  this.isGettingReport = false;
+
+  // Task-related resets
+  this.projectIdToFetch = null;
+  this.isGettingTask = false;
+  this.isShowingTaskByPriority = false;
+  this.delayedTasks = [];
+  this.isShowingDelayedTask = false;
+  this.isAssigningTask = false;
+
+  // Notification-related resets
+  this.isShowingNotification = false;
+  this.notifications = [];
+  this.roleUserId = '';
+
+  // Array resets
+  this.users = [];
+  this.projects = [];
+  this.vendors = [];
+  this.expenses = [];
+  this.reports = [];
+  this.tasks = [];
+  this.delayedTasks = [];
 }
+
   // Handle specific actions from the drawer
   handleAction(action: string) {
     console.log(`Action triggered: ${action}`);
-    this.resetActionContainer();
     this.isDrawerActionSelected = true;
+    this.resetActionContainer();
+
     // Add your logic here for the respective actions
     if (action === 'viewAllUsers') {
-      this.resetActionContainer();
+      // this.resetActionContainer();
       this.showAllUsers(); // Trigger the "View All Users" action
     }
     else if (action === 'addUser') {
-      this.resetActionContainer();
+      // this.resetActionContainer();
 
       
       this.isAddingUser = true;
       this.showAddUserForm();
     }
     else if (action === 'removeUser') {
-      this.resetActionContainer();
+      // this.resetActionContainer();
       this.showRemoveUserForm();
     }
     else if (action === 'updateUser') {
-      this.resetActionContainer();
+      // this.resetActionContainer();
       this.showUpdateUserForm();
     }
     else if(action === 'viewUserById' )
     {
-      this.resetActionContainer();
+      // this.resetActionContainer();
       this.showGetUserForm();
     }
     else if (action === 'viewAllProjects') {

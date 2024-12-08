@@ -63,6 +63,8 @@ export class AdminComponent {
 
   drawerOpen: boolean = false; // Tracks if the drawer is open
   currentDrawer: string | null = null; // Tracks the current drawer content
+
+  //Users Section variables
   isShowingUsers: boolean = false; // Tracks if "All Users" table is being displayed
   users: any[] = []; // Stores the user data
   isAddingUser: boolean = false; // Tracks if "Add User" form is being displayed
@@ -73,20 +75,23 @@ export class AdminComponent {
   updateUserId: number = 0; // Tracks the user ID being updated
   userIdToGet: string = ''; // Stores the user ID to get user data
   user: any = null; // Stores the user details from the API
+
   // Tracks if the user info form is shown
   isGettingUser: boolean = false;
   currentAction: string | null = null; // Stores the current action ('addUser', 'viewUserById', etc.)
+
+  //Projects Section variable
   projects: any[] = []; // Stores the project data
   isShowingProjects: boolean = false;
   projectIdToRemove: number | null = null;
   isRemovingProject: boolean = false; // Tracks if "Remove User" form is being displayed
   isUpdatingProject: boolean = false; // Tracks if "Update User" form is being displayed
-
   projectIdToGet: number | null = null; // Stores the project ID to fetch
   project: any = null; // Stores the fetched project details
   errorMessage: string | null = null; // Stores the error message
-
   isGettingProject: boolean = false;
+
+  //vendors section variable
 
   vendors: any[] = []; // Stores the vendor data
   isShowingVendors: boolean = false;
@@ -191,7 +196,37 @@ export class AdminComponent {
       this.currentDrawer = drawer;
     }
   }
+  resetAllStates() {
+    // Reset Users Section Variables
+    this.isShowingUsers = false;
+    this.isAddingUser = false;
+    this.isRemovingUser = false;
+    this.isUpdatingUser = false;
+    this.isGettingUser = false;
   
+    // Reset Projects Section Variables
+    this.isShowingProjects = false;
+    this.isRemovingProject = false;
+    this.isUpdatingProject = false;
+    this.isGettingProject = false;
+  
+    // Reset Vendors Section Variables
+    this.isShowingVendors = false;
+    this.isAddingVendor = false;
+    this.isUpdatingVendor = false;
+    this.isRemovingVendor = false;
+  
+    // Reset Expenses Section Variables
+    this.isShowingExpensess = false;
+    this.isAddingExpense = false;
+  
+    // Reset Reports Section Variables
+    this.isGettingReport = false;
+  
+    // Reset Miscellaneous Variables
+    this.currentAction = null;
+    this.isDrawerActionSelected = false;
+  }
   //Getting all the users
   showAllUsers() {
     this.isShowingUsers = true; // Show the "All Users" table
@@ -788,6 +823,7 @@ resetUpdateProjectForm() {
     console.log(`Action triggered: ${action}`);
     this.isDrawerActionSelected = true;
     // Add your logic here for the respective actions
+    this.resetAllStates();
     if (action === 'viewAllUsers') {
       this.showAllUsers(); // Trigger the "View All Users" action
     }
