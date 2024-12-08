@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { CustomAlertComponent } from "../../shared/custom-alert/custom-alert.component";
 import { CustomMessageAlertComponent } from '../../shared/custon-message-alert/custon-message-alert.component';
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-admin',
@@ -1010,6 +1012,38 @@ resetUpdateProjectForm() {
     // Pass data to the alert component
     componentRef.instance.message = message;
     componentRef.instance.type = type;
+  }
+
+  //Pdf download functionality
+  // Method to generate and download the PDF
+  downloadUserListAsPDF() {
+    const doc = new jsPDF(); // Create a new PDF document
+
+    // Add a title
+    doc.setFontSize(18);
+    doc.text('User List', 14, 20);
+
+    // Prepare the table data
+    const tableData = this.users.map((user) => [
+      user.userId,
+      user.roleUserId,
+      user.username,
+      user.role,
+      user.email,
+      user.phoneNumber,
+      user.isActive ? 'Active' : 'Inactive',
+    ]);
+
+    // Add the table using autoTable
+    autoTable(doc, {
+      head: [['User ID', 'Role User ID', 'Username', 'Role', 'Email', 'Phone Number', 'Status']],
+      body: tableData,
+      startY: 30, // Position below the title
+      theme: 'striped',
+    });
+
+    // Save the PDF
+    doc.save('user-list.pdf');
   }
 
 }

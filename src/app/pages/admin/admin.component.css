@@ -235,7 +235,7 @@
 .remove-vendor-form button,
 .expense-form button,
 .add-expense-form button,
-.report-form button {
+.report-form button{
   position: center;
   justify-content: center;
   height: 50px;
@@ -253,6 +253,32 @@
   display: block;
   margin: 0 auto;
 }
+
+.download-button {
+  position: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  padding: 0.2rem;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--primary-button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+
+.download-button:hover {
+  background-color: #774fd3;
+}
+
 
 .add-user-form button:hover {
   background-color: #774fd3; /* Darker shade for hover */
