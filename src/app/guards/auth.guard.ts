@@ -1,8 +1,4 @@
-// import { CanActivateFn } from '@angular/router';
 
-// export const authGuard: CanActivateFn = (route, state) => {
-//   return true;
-// };
 
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
@@ -16,7 +12,6 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     const token = localStorage.getItem('token');
     if (token) {
-      // Optionally, decode the token to verify its validity
       return true;
     }
     this.router.navigate(['/login']);

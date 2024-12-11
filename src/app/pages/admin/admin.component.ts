@@ -73,33 +73,33 @@ export class AdminComponent {
   currentDrawer: string | null = null; // Tracks the current drawer content
 
   //Users Section variables
-  isShowingUsers: boolean = false; // Tracks if "All Users" table is being displayed
+  isShowingUsers: boolean = false;
   users: any[] = []; // Stores the user data
-  isAddingUser: boolean = false; // Tracks if "Add User" form is being displayed
+  isAddingUser: boolean = false;
   isDrawerActionSelected: boolean = false;
-  isRemovingUser: boolean = false; // Tracks if "Remove User" form is being displayed
-  userIdToRemove: string = ''; // Stores the user ID to be removed
-  isUpdatingUser: boolean = false; // Tracks if "Update User" form is being displayed
-  updateUserId: number = 0; // Tracks the user ID being updated
-  userIdToGet: string = ''; // Stores the user ID to get user data
-  user: any = null; // Stores the user details from the API
+  isRemovingUser: boolean = false;
+  userIdToRemove: string = '';
+  isUpdatingUser: boolean = false;
+  updateUserId: number = 0;
+  userIdToGet: string = '';
+  user: any = null;
 // fliter user data
-filteredUsers: any[] = []; // Filtered list of users based on filters
-selectedRole: string = ''; // Selected role filter
-selectedAvailability: string = 'true'; // Selected availability filter
+filteredUsers: any[] = [];
+selectedRole: string = ''; 
+selectedAvailability: string = 'true';
   // Tracks if the user info form is shown
   isGettingUser: boolean = false;
-  currentAction: string | null = null; // Stores the current action ('addUser', 'viewUserById', etc.)
+  currentAction: string | null = null;
 
   //Projects Section variable
-  projects: any[] = []; // Stores the project data
+  projects: any[] = [];
   isShowingProjects: boolean = false;
   projectIdToRemove: number | null = null;
-  isRemovingProject: boolean = false; // Tracks if "Remove User" form is being displayed
-  isUpdatingProject: boolean = false; // Tracks if "Update User" form is being displayed
-  projectIdToGet: number | null = null; // Stores the project ID to fetch
-  project: any = null; // Stores the fetched project details
-  errorMessage: string | null = null; // Stores the error message
+  isRemovingProject: boolean = false;
+  isUpdatingProject: boolean = false;
+  projectIdToGet: number | null = null;
+  project: any = null;
+  errorMessage: string | null = null;
   isGettingProject: boolean = false;
 
   //vendors section variable
@@ -113,14 +113,14 @@ selectedAvailability: string = 'true'; // Selected availability filter
 
   //Project Expensens
 
-  projectId: number | null = null; // Stores the project ID input by the user
-  expenses: any[] = []; // Stores the fetched expense data
+  projectId: number | null = null;
+  expenses: any[] = [];
   isShowingExpensess: boolean = false;
-  isAddingExpense: boolean = false; // Tracks if "Add User" form is being displayed
+  isAddingExpense: boolean = false;
 
 
   //Reports
-  reports: any[] = []; // Stores the fetched report data
+  reports: any[] = [];
   isGettingReport: boolean = false;
   isGettingOverallReport: boolean = false;
 
@@ -231,21 +231,21 @@ selectedAvailability: string = 'true'; // Selected availability filter
   }
   //Getting all the users
   showAllUsers() {
-    this.isShowingUsers = true; // Show the "All Users" table
-    this.fetchUsers(); // Fetch users from API
+    this.isShowingUsers = true;
+    this.fetchUsers();
   }
     // Show the "Add User" form
     showAddUserForm() {
-      this.isAddingUser = true; // Show the form
-      this.isShowingUsers = false; // Hide the users table
+      this.isAddingUser = true;
+      this.isShowingUsers = false;
     }
     // Add user API call
   addUser() {
-    const apiUrl = 'https://localhost:7185/api/User'; // API endpoint
+    const apiUrl = 'https://localhost:7185/api/User';
     this.http.post(apiUrl, this.addUserData).subscribe({
       next: (response) => {
         this.showCustomMessage('User added successfully!','success');
-        this.resetAddUserForm(); // Reset the form
+        this.resetAddUserForm();
       },
       error: (err) => {
         console.error('Error adding user:', err);
@@ -264,18 +264,18 @@ selectedAvailability: string = 'true'; // Selected availability filter
       phoneNumber: '',
       isActive: true,
     };
-    this.isAddingUser = false; // Hide the form after submission
+    this.isAddingUser = false;
   }
 
 
     // Fetch users from the API
     private fetchUsers() {
-      const apiUrl = 'https://localhost:7185/api/User'; // API endpoint
+      const apiUrl = 'https://localhost:7185/api/User';
       this.http.get<any[]>(apiUrl).subscribe({
         next: (response) => {
-          this.users = response; // Store the user data
-          this.filteredUsers = response; // Initially, show all users without any filter
-          this.isShowingUsers = true; // Show the users table
+          this.users = response;
+          this.filteredUsers = response;
+          this.isShowingUsers = true;
           this.showCustomMessage('User List Fetched Successfully!','success');
         },
         error: (err) => {
@@ -286,7 +286,7 @@ selectedAvailability: string = 'true'; // Selected availability filter
     }
     // Apply the selected filters and update the user list
     applyFilters() {
-      let filteredData = this.users; // Start with all users
+      let filteredData = this.users;
   
       // Apply role filter
       if (this.selectedRole) {
@@ -299,12 +299,12 @@ selectedAvailability: string = 'true'; // Selected availability filter
         filteredData = filteredData.filter(user => user.isActive === isActive);
       }
   
-      this.filteredUsers = filteredData; // Update filtered users
+      this.filteredUsers = filteredData;
     }
   
     // Method to handle the button click for "View All Users"
     onViewAllUsersClick() {
-      this.fetchUsers(); // Fetch all users when the button is clicked
+      this.fetchUsers();
     }
 
 
@@ -475,11 +475,11 @@ resetAddProjectForm() {
     status: 'Ongoing',
     projectManagerId: '',
   };
-  this.currentAction = null; // Reset the action to hide the form
+  this.currentAction = null;
 }
 //show the remove user form
 showRemoveProjectForm() {
-  this.isRemovingProject = true; // Show the form
+  this.isRemovingProject = true
 }
 removeProject() {
   if (!this.projectIdToRemove || this.projectIdToRemove <= 0) {
@@ -487,7 +487,7 @@ removeProject() {
     return;
   }
 
-  const apiUrl = `https://localhost:7185/api/Project/${this.projectIdToRemove}`; // API endpoint with Project ID
+  const apiUrl = `https://localhost:7185/api/Project/${this.projectIdToRemove}`;
   this.http.delete(apiUrl).subscribe({
     next: () => {
       this.showCustomMessage('Project removed successfully!', 'success');
@@ -511,7 +511,7 @@ updateProject() {
     return;
   }
 
-  const apiUrl = `https://localhost:7185/api/Project/${this.updateProjectData.projectId}`; // API endpoint with Project ID
+  const apiUrl = `https://localhost:7185/api/Project/${this.updateProjectData.projectId}`;
   this.http.put(apiUrl, this.updateProjectData).subscribe({
     next: () => {
       this.showCustomMessage('Project updated successfully!', 'success');
@@ -535,7 +535,7 @@ resetUpdateProjectForm() {
     status: 'Ongoing',
     projectManagerId: '',
   };
-  this.currentAction = null; // Reset the action to hide the form
+  this.currentAction = null;
 }
    // Show the "Update Project" form
    showUpdateProjectForm() {
@@ -555,22 +555,21 @@ resetUpdateProjectForm() {
       return;
     }
   
-    const apiUrl = `https://localhost:7185/api/Project/${this.projectIdToGet}`; // API endpoint with Project ID
+    const apiUrl = `https://localhost:7185/api/Project/${this.projectIdToGet}`;
     this.http.get(apiUrl).subscribe({
       next: (response) => {
-        this.project = response; // Store the project details
+        this.project = response;
         this.showCustomMessage('Showing available project!', 'success');
-        this.errorMessage = null; // Clear any previous error messages
+        this.errorMessage = null;
       },
       error: (err) => {
-        // console.error('Error fetching project:', err);
         this.showCustomMessage('Error fetching the projecct. Please try again!', 'error');
         if (err.status === 404) {
           this.errorMessage = `Project with ID ${this.projectIdToGet} does not exist.`;
         } else {
           this.errorMessage = 'An error occurred while fetching the project. Please try again.';
         }
-        this.project = null; // Clear previous project data
+        this.project = null;
       },
     });
   }
@@ -585,11 +584,11 @@ resetUpdateProjectForm() {
 //Getting all the vendors
 
   fetchAllVendors() {
-    const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for fetching vendors
+    const apiUrl = 'https://localhost:7185/api/Vendor';
     this.http.get<any[]>(apiUrl).subscribe({
       next: (response) => {
-        this.vendors = response; // Store the vendor data
-        console.log('Vendors fetched successfully:', this.vendors); // Debugging
+        this.vendors = response;
+        console.log('Vendors fetched successfully:', this.vendors);
         this.showCustomMessage('Vendors fetched successfully!', 'success');
       },
       error: (err) => {
@@ -599,19 +598,19 @@ resetUpdateProjectForm() {
     });
   }
   showAllVendors() {
-    this.isShowingVendors = true; // Show the "All Users" table
-    this.fetchAllVendors(); // Fetch users from API
+    this.isShowingVendors = true;
+    this.fetchAllVendors();
   }
 
   //Adding the vendor
 
   addVendor() {
-    const apiUrl = 'https://localhost:7185/api/Vendor'; // API endpoint for adding a vendor
+    const apiUrl = 'https://localhost:7185/api/Vendor';
     this.http.post(apiUrl, this.addVendorData).subscribe({
       next: () => {
         this.showCustomMessage('Vendor added successfully!', 'success');
-        this.resetAddVendorForm(); // Reset the form after submission
-        this.fetchAllVendors(); // Refresh the vendor list
+        this.resetAddVendorForm();
+        this.fetchAllVendors();
       },
       error: (err) => {
         console.error('Error adding vendor:', err);
@@ -628,18 +627,18 @@ resetUpdateProjectForm() {
       contractTerms: '',
       deliveryStatus: '',
     };
-    this.currentAction = null; // Reset the current action
+    this.currentAction = null;
   }
   
   showAddVendorForm() {
-    this.isAddingVendor = true; // Show the form
-    this.isShowingVendors = false; // Hide the users table
+    this.isAddingVendor = true;
+    this.isShowingVendors = false;
   }
 
   //Update the status of vendor
   updateVendorStatusData: any = {
     vendorId: null,
-    deliveryStatus: 'Delivered', // Default value
+    deliveryStatus: 'Delivered',
   };
   
 
@@ -660,13 +659,13 @@ resetUpdateProjectForm() {
   
     // Send the request with the appropriate content-type
     this.http.patch(apiUrl, payload, {
-      headers: { 'Content-Type': 'application/json' }, // Use application/json to send the payload as JSON
-      responseType: 'text', // Expecting a text response (empty 204 response)
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'text',
     }).subscribe({
       next: () => {
         this.statusMessage = 'Vendor delivery status updated successfully!';
         this.showCustomMessage('Vendor updated successfully!', 'success');
-        this.resetUpdateVendorStatusForm(); // Reset the form
+        this.resetUpdateVendorStatusForm();
       },
       error: (err) => {
         console.error('Error updating vendor status:', err);
@@ -685,11 +684,11 @@ resetUpdateProjectForm() {
       deliveryStatus: 'Delivered',
     };
     this.statusMessage = null;
-    this.currentAction = null; // Reset the current action
+    this.currentAction = null;
   }
   
   showUpdateVendorForm() {
-    this.isUpdatingVendor = true; // Show the form
+    this.isUpdatingVendor = true;
   }
   
 
@@ -699,8 +698,7 @@ resetUpdateProjectForm() {
     vendorId: null,
   };
   
-  statusMessage: string | null = null; // Stores success or error messages
-  
+  statusMessage: string | null = null;
   removeVendor() {
     if (!this.removeVendorData.vendorId || this.removeVendorData.vendorId <= 0) {
       this.statusMessage = 'Please enter a valid Vendor ID.';
@@ -714,10 +712,9 @@ resetUpdateProjectForm() {
       next: () => {
         this.statusMessage = 'Vendor removed successfully!';
   
-        // Show confirmation message (using alert or MatSnackBar)
         this.showConfirmationMessage('Vendor removed successfully!');
   
-        this.resetRemoveVendorForm(); // Reset the form after successful deletion
+        this.resetRemoveVendorForm();
       },
       error: (err) => {
         console.error('Error removing vendor:', err);
@@ -728,7 +725,6 @@ resetUpdateProjectForm() {
   
   // Method to show confirmation message
   showConfirmationMessage(message: string) {
-    // Using alert (basic method)
     this.showCustomMessage(message, 'success');
   }
   
@@ -738,7 +734,7 @@ resetUpdateProjectForm() {
       vendorId: null,
     };
     this.statusMessage = null;
-    this.currentAction = null; // Reset the current action
+    this.currentAction = null;
   }
   
   showRemoveVendorForm() {
@@ -760,7 +756,7 @@ resetUpdateProjectForm() {
     // Send GET request to fetch expenses for the given project ID
     this.http.get<any[]>(apiUrl).subscribe({
       next: (response) => {
-        this.expenses = response; // Store the fetched expenses
+        this.expenses = response;
         console.log('Expenses fetched successfully:', this.expenses);
         this.showCustomMessage('Showing available expenses!', 'success');
       },
@@ -778,8 +774,8 @@ resetUpdateProjectForm() {
   }
   
   showAllExpenses() {
-    this.isShowingExpensess = true; // Show the "All Users" table
-    this.fetchExpensesByProject(); // Fetch users from API
+    this.isShowingExpensess = true;
+    this.fetchExpensesByProject();
   }
   
 
@@ -822,8 +818,8 @@ resetUpdateProjectForm() {
     this.currentAction = null; // Reset the current action
   }
   showAddExpenseForm() {
-    this.isAddingExpense = true; // Show the form
-    this.isShowingExpensess = false; // Hide the users table
+    this.isAddingExpense = true;
+    this.isShowingExpensess = false;
   }
 
 
@@ -888,7 +884,7 @@ resetUpdateProjectForm() {
     // Render the Pie Chart
     renderPieChart(statusCounts: { [status: string]: number }) {
       if (this.chart) {
-        this.chart.destroy(); // Destroy the old chart instance
+        this.chart.destroy();
       }
   
       const labels = Object.keys(statusCounts);
@@ -925,7 +921,7 @@ resetUpdateProjectForm() {
     // Add your logic here for the respective actions
     this.resetAllStates();
     if (action === 'viewAllUsers') {
-      this.showAllUsers(); // Trigger the "View All Users" action
+      this.showAllUsers();
     }
     else if (action === 'addUser') {
       this.isAddingUser = true;
@@ -996,38 +992,27 @@ resetUpdateProjectForm() {
       this.logout(); // Call the logout method
     }else  if (action === 'viewOverallReports') {
       this.showGetOverallReportForm();
-      // this.fetchProjectStatuses(); // Fetch data and render the chart
     }
     
   }
   resetDefaultMessage() {
-    this.isDrawerActionSelected = false; // Show default message again when necessary
+    this.isDrawerActionSelected = false;
   }
 
   //Logout
-  isAlertVisible = false; // To control visibility of the custom alert
+  isAlertVisible = false;
   logout() {
-    this.isAlertVisible = true; // Show the custom alert
+    this.isAlertVisible = true;
   }
   onLogoutConfirm() {
     this.isAlertVisible = false;
-    localStorage.clear(); // Clear local storage
-    window.location.href = '/login'; // Redirect to the login page
+    localStorage.clear();
+    window.location.href = '/login';
   }
 
   onLogoutCancel() {
-    this.isAlertVisible = false; // Close the custom alert
+    this.isAlertVisible = false;
   }
-
-  // logout() {
-  //   // Confirm logout action
-  //   const confirmed = confirm('Are you sure you want to logout?');
-  //   if (confirmed) {
-  //     localStorage.clear(); // Clear local storage
-  //     alert('You have been logged out successfully!');
-  //     window.location.href = '/login'; // Redirect to the login page
-  //   }
-  // }
   
   showCustomMessage(message: string, type: 'success' | 'error' | 'info') {
     // Clear existing alerts
@@ -1066,7 +1051,7 @@ resetUpdateProjectForm() {
     autoTable(doc, {
       head: [['User ID', 'Role User ID', 'Username', 'Role', 'Email', 'Phone Number', 'Status']],
       body: tableData,
-      startY: 30, // Position below the title
+      startY: 30,
       theme: 'striped',
     });
   

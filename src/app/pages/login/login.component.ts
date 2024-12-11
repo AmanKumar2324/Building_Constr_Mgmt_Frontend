@@ -20,70 +20,10 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading: boolean = false;
   constructor(private authService: AuthService, private router: Router) {}
-
-   // Handle the form submission
-  //  onLogin() {
-  //   this.isLoading = true;
-  //   this.errorMessage = '';
-
-  //   // Prepare the request body
-  //   const credentials = {
-  //     roleUserId: this.roleUserId,
-  //     password: this.password,
-  //   };
-
-  //   // Call the AuthService to authenticate the user
-  //   this.authService.login(credentials).subscribe({
-  //     next: (response) => {
-  //       // Save the JWT token and user details in localStorage
-  //       localStorage.setItem('token', response.token);
-  //       localStorage.setItem('user', JSON.stringify(response.user));
-
-  //       // Navigate to the respective role's dashboard
-  //       this.router.navigate(['/home']);
-  //       // const roleRoute = response.user.role.replace(' ', '-').toLowerCase(); // e.g., "Project Manager" -> "project-manager"
-  //       // this.router.navigate([`/${roleRoute}`]);
-  //     },
-  //     error: (err) => {
-  //       this.isLoading = false;
-  //       this.errorMessage = 'Invalid Role User ID or Password';
-  //     },
-  //   });
-  // }
-  // onLogin() {
-  //   this.isLoading = true;
-  //   this.errorMessage = '';
-  
-  //   const credentials = {
-  //     roleUserId: this.roleUserId,
-  //     password: this.password,
-  //   };
-  
-  //   this.authService.login(credentials).subscribe({
-  //     next: (response) => {
-  //       // Save JWT token and user details in localStorage
-  //       localStorage.setItem('token', response.token);
-  //       localStorage.setItem('user', JSON.stringify(response.user));
-  //       localStorage.setItem('roleUserId', response.user.roleUserId);
-  
-  //       // Determine the route based on the user's role
-  //       const roleRoute = this.getRouteForRole(response.user.role);
-  //       if (roleRoute) {
-  //         this.router.navigate([`/${roleRoute}`]);
-  //       } else {
-  //         this.errorMessage = 'Role not recognized. Please contact support.';
-  //       }
-  //     },
-  //     error: (err) => {
-  //       this.isLoading = false;
-  //       this.errorMessage = 'Invalid Role User ID or Password';
-  //     },
-  //   });
-  // }
   
   onLogin() {
-    this.isLoading = true; // Start loading indicator
-    this.errorMessage = ''; // Clear previous errors
+    this.isLoading = true;
+    this.errorMessage = '';
     
     const credentials = {
       roleUserId: this.roleUserId,
@@ -98,7 +38,7 @@ export class LoginComponent {
         localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('roleUserId', response.user.roleUserId);
   
-        console.log('Login successful:', response); // Debugging
+        console.log('Login successful:', response);
   
         // Determine the route based on the user's role
         const roleRoute = this.getRouteForRole(response.user.role);

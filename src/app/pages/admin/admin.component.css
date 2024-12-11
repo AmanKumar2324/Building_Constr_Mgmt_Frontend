@@ -193,7 +193,7 @@
 .report-form label
 {
   display: flex;
-  flex-direction: column; /* Stack label and input vertically */
+  flex-direction: column;
   font-size: 14px;
   font-weight: bold;
   color: #333;
